@@ -109,8 +109,8 @@ h1 {
   <p class="subtitle">
     Pass-rate history for every test suite we run against the
     published Lily Labs compiler.
-    <a href="https://github.com/lilylabs/compiler-tests">source</a> ·
-    <a href="https://github.com/lilylabs/compiler-tests/blob/main/docs/methodology.md">methodology</a>
+    <a href="https://github.com/llylabs/compiler-tests">source</a> ·
+    <a href="https://github.com/llylabs/compiler-tests/blob/main/docs/methodology.md">methodology</a>
   </p>
 
   <div class="summary-grid" id="summaryGrid">
@@ -127,7 +127,7 @@ h1 {
   <p class="footer">
     Last updated: <span id="lastUpdated">…</span><br>
     Data committed to
-    <a href="https://github.com/lilylabs/compiler-tests/tree/main/results">results/</a>
+    <a href="https://github.com/llylabs/compiler-tests/tree/main/results">results/</a>
     after every nightly run.
   </p>
 </div>
@@ -136,7 +136,7 @@ h1 {
 // ───── data loading ─────────────────────────────────────────
 async function loadResults() {
   // List committed result files via GitHub API
-  const repo = "lilylabs/compiler-tests";
+  const repo = "llylabs/compiler-tests";
   const apiUrl = `https://api.github.com/repos/${repo}/contents/results`;
 
   let resp;

@@ -94,7 +94,7 @@ as a mismatch.
 ```bash
 curl -fsSL https://rc.lilylabs.io/install.sh | bash
 lly plugin install cpp
-git clone https://github.com/lilylabs/compiler-tests
+git clone https://github.com/llylabs/compiler-tests
 cd compiler-tests/testbench && npm install
 npm start -- --config testbench.ci.json --suite gcc-dg-cpp
 ```

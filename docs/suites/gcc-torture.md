@@ -79,7 +79,7 @@ months and document movement in the commit.
 ```bash
 curl -fsSL https://rc.lilylabs.io/install.sh | bash
 lly plugin install c
-git clone https://github.com/lilylabs/compiler-tests
+git clone https://github.com/llylabs/compiler-tests
 cd compiler-tests/testbench && npm install
 # First run: ~80 MB sparse-clone of gcc mirror (cached)
 npm start -- --config testbench.ci.json --suite gcc-torture

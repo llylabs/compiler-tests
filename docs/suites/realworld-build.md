@@ -82,7 +82,7 @@ This is deliberately not a benchmark suite. It's an
 ```bash
 curl -fsSL https://rc.lilylabs.io/install.sh | bash
 lly plugin install c cpp
-git clone https://github.com/lilylabs/compiler-tests
+git clone https://github.com/llylabs/compiler-tests
 cd compiler-tests/testbench && npm install
 npm start -- --config testbench.ci.json --suite realworld-build
 ```

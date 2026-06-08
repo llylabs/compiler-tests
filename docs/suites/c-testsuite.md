@@ -58,7 +58,7 @@ Current pin: see `testbench/testbench.ci.json`.
 ```bash
 curl -fsSL https://rc.lilylabs.io/install.sh | bash
 lly plugin install c
-git clone https://github.com/lilylabs/compiler-tests
+git clone https://github.com/llylabs/compiler-tests
 cd compiler-tests/testbench && npm install
 npm start -- --config testbench.ci.json --suite c-testsuite
 ```

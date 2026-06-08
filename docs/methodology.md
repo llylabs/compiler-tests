@@ -46,7 +46,7 @@ regression we'll investigate. A 95% pass rate that holds
 steady for three months is a stronger signal than a 98%
 pass rate measured once.
 
-See [the trend page](https://lilylabs.github.io/compiler-tests/)
+See [the trend page](https://llylabs.github.io/compiler-tests/)
 for the history.
 
 ## How runs work

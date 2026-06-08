@@ -41,5 +41,5 @@ documentation page explaining:
   measure, what we don't, and why
 - [main README](../../README.md) — overview and
   trigger instructions
-- [trend page](https://lilylabs.github.io/compiler-tests/)
+- [trend page](https://llylabs.github.io/compiler-tests/)
   — pass-rate history
