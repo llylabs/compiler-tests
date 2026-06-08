@@ -1,0 +1,36 @@
+{
+  "id": "cjson",
+  "label": "cJSON 1.7.18 (single-file JSON parser/printer)",
+  "source": {
+    "url": "https://github.com/DaveGamble/cJSON/archive/refs/tags/v1.7.18.tar.gz",
+    "sha256": "3aa806844a03442c00769b83e99970be70fbef03735ff898f4811dd03b9f5ee5",
+    "type": "tar.gz",
+    "extract_dir": "cJSON-1.7.18"
+  },
+  "prelude_headers": [
+    "stdio.h",
+    "stdlib.h",
+    "string.h",
+    "math.h",
+    "float.h",
+    "ctype.h"
+  ],
+  "sources": [
+    "cJSON.c"
+  ],
+  "driver_file": "driver.c",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "stdin": "",
+    "expect_stdout_contains": [
+      "OK parse",
+      "name=alpha",
+      "value=42",
+      "OK print"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 30000
+  }
+}

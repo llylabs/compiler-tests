@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>H06 useMemo / useCallback</h1>
+CONTAINS: Memo: 42
+CONTAINS: CB OK

@@ -1,0 +1,8 @@
+STATUS: 200
+CONTAINS: <h1>Destructuring</h1>
+CONTAINS: First: 1
+CONTAINS: Second: 2
+CONTAINS: Rest len: 3
+CONTAINS: X+Y: 30
+CONTAINS: RenamedA: 5
+CONTAINS: RenamedB default: 100

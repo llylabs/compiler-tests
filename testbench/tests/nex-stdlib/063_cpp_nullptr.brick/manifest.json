@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "name": "063_cpp_nullptr.brick",
+  "source_lang": "cpp",
+  "entrypoint": "brick_001",
+  "abi_version": "nex.brick.v1",
+  "toolchain": {
+    "target": "wasm32-wasi",
+    "frontend": "cpp",
+    "llvm_version": "20.1.2",
+    "sysroot": "/home/leon/wasi-sdk/share/wasi-sysroot",
+    "stdlib": "libc++",
+    "cxx_abi": "itanium",
+    "compat_profile": "server_grade",
+    "brick_mode": "single",
+    "lto": false
+  },
+  "syscall_caps": [
+    "wasi_snapshot_preview1",
+    "nex.brick.v1"
+  ],
+  "shared_memory": true,
+  "shared_table": false,
+  "activation_mode": "bitmap_commit",
+  "ordering_mode": "deterministic_fanout_fanin",
+  "init_order": [
+    "brick_001"
+  ],
+  "fini_order": [
+    "brick_001"
+  ],
+  "bricks": [
+    {
+      "id": "brick_001",
+      "wasm": "bricks/brick_001.wasm",
+      "functions": [
+        "main"
+      ],
+      "numeric_id": 0,
+      "entry_export": "main",
+      "header_offset": 0,
+      "required_bitmap": 0,
+      "imports": [],
+      "inputs": [],
+      "outputs": [],
+      "globals_read": [],
+      "globals_write": [],
+      "flags": {
+        "parallelizable": false,
+        "local_only": false,
+        "has_fallback": false
+      }
+    }
+  ],
+  "globals": [],
+  "memory": {
+    "initial_pages": 512,
+    "max_pages": 1024,
+    "shared": true
+  },
+  "execution_flow": {},
+  "conflicts": []
+}

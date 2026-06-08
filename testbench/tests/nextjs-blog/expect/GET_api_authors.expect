@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: "authors"
+CONTAINS: "Alice Chen"
+CONTAINS: "Bob Martinez"
+CONTAINS: "Carol Kim"
+CONTAINS: "total":3

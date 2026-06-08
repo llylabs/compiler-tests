@@ -1,0 +1,13 @@
+--- unwind test ---
+guard L1 created
+guard L2 created
+guard L3 created
+throwing from level3
+guard L3 destroyed
+guard L2 destroyed
+guard L1 destroyed
+caught at main: 42
+--- rethrow test ---
+inner catch: original
+outer catch: original
+done

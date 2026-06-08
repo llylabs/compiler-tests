@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: Viewport Test
+CONTAINS: <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"/>
+CONTAINS: <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff"/>
+CONTAINS: <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000"/>
+CONTAINS: <meta name="color-scheme" content="dark light"/>

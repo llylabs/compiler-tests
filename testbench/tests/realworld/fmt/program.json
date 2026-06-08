@@ -1,0 +1,28 @@
+{
+  "id": "fmt",
+  "label": "{fmt} 11.0.2 (header-only formatting library)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "s1:hello, world!",
+      "s2:2+3=5",
+      "s3:[    42]",
+      "s4:0xff 010 0b101",
+      "s5:3.142",
+      "s6:[1,2,3,4]",
+      "s7:buf:ok-7",
+      "OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

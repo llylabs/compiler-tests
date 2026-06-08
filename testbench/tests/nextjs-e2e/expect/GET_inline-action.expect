@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: Inline Use Server
+CONTAINS: method="post"
+CONTAINS: action="/_lly/action/
+CONTAINS: from-inline
+CONTAINS: Submit

@@ -1,0 +1,4 @@
+sorted: 1 7 13 23 42 55 99
+found 42: yes
+found 50: no
+words: apple banana cherry date

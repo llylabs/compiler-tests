@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>Destructured Await</h1>
+CONTAINS: Name: Alice
+CONTAINS: Role: admin

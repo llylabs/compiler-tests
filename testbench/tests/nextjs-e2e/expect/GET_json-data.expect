@@ -1,0 +1,9 @@
+STATUS: 200
+CONTAINS: <h1>Product Inventory</h1>
+CONTAINS: Total products: 3
+CONTAINS: Total inventory value:
+CONTAINS: Widget
+CONTAINS: Gadget
+CONTAINS: Thingamajig
+CONTAINS: tools
+CONTAINS: electronics

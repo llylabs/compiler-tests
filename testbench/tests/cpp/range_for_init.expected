@@ -1,0 +1,6 @@
+array: 10 20 30 40 50
+custom: 1 2 3
+modified: 10 20 30
+point: 3,4
+sum: 30
+if-init: 42

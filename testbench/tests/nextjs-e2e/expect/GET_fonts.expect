@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Fonts Test</h1>
+CONTAINS: font-inter
+CONTAINS: --font-geist-mono
+CONTAINS: --font-local

@@ -1,0 +1,9 @@
+tokens: hello world foo bar
+strstr: brown fox
+strstr miss: not found
+filename: file.txt
+first slash at: 0
+strncpy: hello
+strncat: Hello Beautiful
+strncmp eq: 1
+strncmp ne: 0

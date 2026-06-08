@@ -1,0 +1,6 @@
+caught as Base: code=42 what=something failed
+caught deep as Base: code=3 what=DeepError
+caught as Derived: something failed
+exact: DeepError
+fallback base: code=7
+done

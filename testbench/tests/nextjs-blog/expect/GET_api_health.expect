@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: "status":"healthy"
+CONTAINS: "runtime":"nex"
+CONTAINS: "ssr":true
+CONTAINS: "apiRoutes":true

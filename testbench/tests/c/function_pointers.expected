@@ -1,0 +1,7 @@
+add(10,3) = 13
+sub(10,3) = 7
+mul(10,3) = 30
+apply add: 15
+apply mul: 42
+doubled: 2 4 6 8 10
+negated: -2 -4 -6 -8 -10

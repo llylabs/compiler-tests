@@ -1,0 +1,19 @@
+$primary: #1a73e8;
+$padding: 20px;
+
+.container {
+  padding: $padding;
+  background: lighten($primary, 40%);
+  .heading {
+    color: $primary;
+    font-size: 32px;
+  }
+  ul {
+    li {
+      margin: 4px 0;
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}

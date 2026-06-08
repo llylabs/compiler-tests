@@ -1,0 +1,21 @@
+{
+  "id": "doctest",
+  "label": "doctest v2.4.11 (single-header testing framework)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "doctest:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

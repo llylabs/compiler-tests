@@ -1,0 +1,37 @@
+STATUS: 200
+CONTAINS: <title>Meta Full</title>
+CONTAINS: <meta name="description" content="C1 metadata stage 2 test"/>
+CONTAINS: <meta name="keywords" content="c1,metadata,opengraph"/>
+CONTAINS: <meta name="author" content="Leon"/>
+CONTAINS: <link rel="author" href="https://lilylabs.io"/>
+CONTAINS: <meta name="creator" content="Lily Labs"/>
+CONTAINS: <meta name="publisher" content="Lily Labs"/>
+CONTAINS: <meta name="application-name" content="lly nextjs"/>
+CONTAINS: <meta name="format-detection"
+CONTAINS: telephone=no
+CONTAINS: <meta name="robots" content="noindex,nofollow,noarchive"/>
+CONTAINS: <meta name="googlebot" content="noindex,max-snippet:-1"/>
+CONTAINS: <meta property="og:title" content="OG Title"/>
+CONTAINS: <meta property="og:description" content="OG Desc"/>
+CONTAINS: <meta property="og:url" content="https://example.com/x"/>
+CONTAINS: <meta property="og:site_name" content="Example"/>
+CONTAINS: <meta property="og:type" content="article"/>
+CONTAINS: <meta property="og:locale" content="de_DE"/>
+CONTAINS: <meta property="og:locale:alternate" content="en_US"/>
+CONTAINS: <meta property="og:image" content="https://example.com/og.png"/>
+CONTAINS: <meta property="og:image:width" content="1200"/>
+CONTAINS: <meta property="og:image:height" content="630"/>
+CONTAINS: <meta name="twitter:card" content="summary_large_image"/>
+CONTAINS: <meta name="twitter:site" content="@example"/>
+CONTAINS: <meta name="twitter:creator" content="@creator"/>
+CONTAINS: <meta name="twitter:image" content="https://example.com/tw.png"/>
+CONTAINS: <link rel="icon" href="/favicon.ico"/>
+CONTAINS: <link rel="shortcut icon" href="/short.png"/>
+CONTAINS: <link rel="apple-touch-icon" href="/apple.png"
+CONTAINS: <link rel="canonical" href="https://example.com/x"/>
+CONTAINS: <link rel="alternate" hreflang="de" href="/de/x"/>
+CONTAINS: <link rel="alternate" hreflang="en-US" href="/en/x"/>
+CONTAINS: <meta name="google-site-verification" content="g-tok"/>
+CONTAINS: <meta name="yandex-verification" content="y-tok"/>
+CONTAINS: <meta name="category" content="tech"/>
+CONTAINS: <link rel="manifest" href="/manifest.json"/>

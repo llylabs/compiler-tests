@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>try-finally-once</h1>
+CONTAINS: counter=1
+NOT-CONTAINS: counter=2

@@ -1,0 +1,9 @@
+double->int: 3
+neg as uint: 4294967291
+int->float->int: 123456792
+before swap: 100 200
+after swap: 200 100
+byte 0: 0x44
+typedef chain: 42
+int div: 3
+float div: 3.5

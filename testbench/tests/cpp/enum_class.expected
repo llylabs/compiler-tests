@@ -1,0 +1,12 @@
+color: Blue
+0: Red
+1: Green
+2: Blue
+3: Yellow
+OK: 200
+NotFound: 404
+ServerError: 500
+eq: 1
+ne: 1
+Blue as int: 2
+back: Blue

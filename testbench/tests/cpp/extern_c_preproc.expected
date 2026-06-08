@@ -1,0 +1,11 @@
+MAX(3,7): 7
+MIN(3,7): 3
+SQUARE(5): 25
+lang: C++
+version >= 17
+c_add: 30
+c_mul: 42
+abs(-42): 42
+abs(42): 42
+concat: 42
+has line: 1

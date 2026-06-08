@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Actions</h1>
+CONTAINS: <form
+CONTAINS: method="post"
+CONTAINS: action="

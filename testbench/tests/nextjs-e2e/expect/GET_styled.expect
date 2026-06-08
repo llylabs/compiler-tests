@@ -1,0 +1,7 @@
+STATUS: 200
+CONTAINS: Styled Page
+CONTAINS: style="
+CONTAINS: display:flex
+CONTAINS: Card One
+CONTAINS: Card Two
+NOT-CONTAINS: Internal Server Error

@@ -1,0 +1,9 @@
+size: 3
+peek: 30
+pop: 30 20 10
+empty: 1
+double peek: 2.5
+max(3,7): 7
+max(3.5,2.1): 3.5
+min(3,7): 3
+swapped: 20 10

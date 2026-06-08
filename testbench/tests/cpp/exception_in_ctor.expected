@@ -1,0 +1,6 @@
+Member 1 constructed: alive=1
+Member 2 constructed: alive=2
+Member 2 throws
+Member 1 destructed: alive=1
+caught: 99 alive=1
+done: alive=1

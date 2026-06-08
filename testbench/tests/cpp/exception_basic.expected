@@ -1,0 +1,9 @@
+10/2 = 5
+10/0 = caught: code=1 msg=division by zero
+caught int: 42
+caught str: error message
+int: 100
+str: hello
+exc: 3
+no throw: 8
+done

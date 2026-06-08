@@ -1,0 +1,26 @@
+{
+  "id": "tomlplusplus",
+  "label": "toml++ v3.4.0 (header-only TOML parser)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "host=wasm.local",
+      "port=8080",
+      "nfeat=3",
+      "item0=alpha w=1.50",
+      "item1=beta w=2.25",
+      "toml++:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 90000
+  }
+}

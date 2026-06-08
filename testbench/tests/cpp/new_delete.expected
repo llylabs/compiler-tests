@@ -1,0 +1,15 @@
+new Obj(1)
+a->id = 1
+del Obj(1)
+--- array ---
+arr: 10 20 30 40 50
+--- obj array ---
+new Obj(10)
+new Obj(11)
+new Obj(12)
+del Obj(12)
+del Obj(11)
+del Obj(10)
+--- chain ---
+*p = 42
+done

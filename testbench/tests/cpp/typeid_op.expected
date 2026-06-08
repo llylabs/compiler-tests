@@ -1,0 +1,10 @@
+int==int: 1
+int==double: 0
+a is Dog: 1
+b is Cat: 1
+c is Animal: 1
+a is Animal: 0
+name not empty: 1
+static: 1
+dynamic ref: 1
+done

@@ -1,0 +1,8 @@
+5! = 120
+10! = 3628800
+fib(10) = 55
+auto int: 42
+auto double: 3.14
+auto char: A
+arr[9]: 0 1 4 9 16 25 36 49 64
+decltype: 20

@@ -1,0 +1,9 @@
+safe_func
+10/2 = 5
+caught: division by zero
+safe noexcept: 1
+divide noexcept: 0
+NoThrow::method
+NoThrow ctor noexcept: 1
+MayThrow::risky
+done

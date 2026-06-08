@@ -1,0 +1,6 @@
+STATUS: 200
+HEADER: content-type: image/svg+xml
+CONTAINS: <svg
+CONTAINS: Dynamic OG Test
+CONTAINS: width="1200"
+CONTAINS: height="630"

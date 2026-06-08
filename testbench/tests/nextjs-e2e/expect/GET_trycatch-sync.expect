@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Try-Catch-Sync</h1>
+CONTAINS: Result: ok
+CONTAINS: J01: caught: boom
+NOT-CONTAINS: Uncaught

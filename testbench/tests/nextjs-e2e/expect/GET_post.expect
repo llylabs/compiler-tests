@@ -1,0 +1,3 @@
+STATUS: 200
+CONTAINS: Post Detail
+NOT-CONTAINS: Internal Server Error

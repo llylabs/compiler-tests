@@ -1,0 +1,5 @@
+friend func: 42
+inspect: 42
+modified: 99
+p1==p2: 1
+p1==p3: 0

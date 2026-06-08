@@ -1,0 +1,27 @@
+{
+  "id": "spdlog",
+  "label": "spdlog 1.14.1 (header-only logging library)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "== spdlog smoke ==",
+      "s1:hello world, ans=42",
+      "[warning] s2:warned",
+      "[error] s3:errored",
+      "s4:pi=3.142 hex=0xff pad=[    7]",
+      "[named][info] s5:msg",
+      "OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 90000
+  }
+}

@@ -1,0 +1,9 @@
+p[0]=10 p[2]=30 p[4]=50
+*p=10 *(p+3)=40
+diff: 4
+start < end: 1
+start == arr: 1
+via pointer: 10 20 30 40 50
+reversed: 50 40 30 20 10
+x=42 *px=42 **ppx=42
+after: x=99

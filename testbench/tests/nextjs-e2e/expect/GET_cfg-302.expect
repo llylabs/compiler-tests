@@ -1,0 +1,3 @@
+REDIRECT: manual
+STATUS: 307
+HEADER: location: /cfg-new

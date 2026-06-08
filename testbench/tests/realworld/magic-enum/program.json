@@ -1,0 +1,23 @@
+{
+  "id": "magic-enum",
+  "label": "magic_enum v0.9.5 (header-only enum reflection)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "name=Green",
+      "count=4",
+      "magic-enum:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

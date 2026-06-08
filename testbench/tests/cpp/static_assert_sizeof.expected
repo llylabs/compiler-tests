@@ -1,0 +1,9 @@
+char=1 short=2 int=4 long=4 ptr=4
+float=4 double=8
+sizeof(Empty) = 1, alignof = 1
+sizeof(OneInt) = 4, alignof = 4
+sizeof(TwoInts) = 8, alignof = 4
+sizeof(Mixed) = 12, alignof = 4
+arr[10]: sizeof=40 count=10
+alignof(int)=4 alignof(double)=8
+ok

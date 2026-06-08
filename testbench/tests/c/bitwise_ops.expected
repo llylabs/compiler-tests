@@ -1,0 +1,14 @@
+AND: 0x00
+OR:  0xFF
+XOR: 0xFF
+NOT: 0x0F
+shl: 1024
+shr: 32
+set bits: 137
+bit 3: 1
+bit 4: 0
+cleared 3: 129
+bits in 0xFF: 8
+bits in 0x55: 4
+sign extend: -1
+zero extend: 200

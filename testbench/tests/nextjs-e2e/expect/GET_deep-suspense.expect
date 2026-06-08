@@ -1,0 +1,8 @@
+STATUS: 200
+CONTAINS: Deep Suspense
+CONTAINS: user: user-42
+CONTAINS: post-42-a
+CONTAINS: post-42-b
+CONTAINS: data-lly-hydrate-boundary="B:0"
+CONTAINS: data-lly-hydrate-boundary="B:2"
+NOT-CONTAINS: loading

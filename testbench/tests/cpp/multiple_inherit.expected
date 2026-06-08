@@ -1,0 +1,5 @@
+Data(10, 20)
+ser: data-serialized
+Data(10, 20)
+via base: data-serialized
+same object: 1

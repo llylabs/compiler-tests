@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: Font Test
+CONTAINS: fonts.googleapis.com/css2?family=Inter
+CONTAINS: --font-inter
+CONTAINS: .font-inter
+HEADER: vary: Accept-Encoding

@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>j04</h1>
+CONTAINS: result=the-value
+NOT-CONTAINS: result=[object Promise]
+NOT-CONTAINS: ERR:

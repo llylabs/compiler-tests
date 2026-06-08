@@ -1,0 +1,24 @@
+{
+  "id": "cxxopts",
+  "label": "cxxopts v3.2.0 (header-only CLI parser)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "name=wasm",
+      "count=2",
+      "values=10,20",
+      "cxxopts:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

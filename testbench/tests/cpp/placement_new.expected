@@ -1,0 +1,11 @@
+Widget(42)
+w->id = 42
+~Widget(42)
+Widget(10)
+Widget(11)
+Widget(12)
+arr: 10 11 12
+~Widget(12)
+~Widget(11)
+~Widget(10)
+done

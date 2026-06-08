@@ -1,0 +1,17 @@
+--- scope test ---
+ctor 1
+ctor 2
+ctor 3
+dtor 3
+dtor 2
+ctor 4
+dtor 4
+dtor 1
+--- array ---
+ctor 10
+ctor 11
+ctor 12
+dtor 12
+dtor 11
+dtor 10
+--- done ---

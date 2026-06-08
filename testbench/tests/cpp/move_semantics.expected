@@ -1,0 +1,17 @@
+--- move ctor ---
+ctor 1 (size=3)
+move 201 from 1
+b.sum=6 a.data=null
+--- copy ctor ---
+ctor 2 (size=4)
+copy 102 from 2
+c.sum=10 d.sum=10
+--- return value ---
+ctor 3 (size=5)
+e.sum=15
+--- done ---
+dtor 3 (data=valid)
+dtor 102 (data=valid)
+dtor 2 (data=valid)
+dtor 201 (data=valid)
+dtor 1 (data=null)

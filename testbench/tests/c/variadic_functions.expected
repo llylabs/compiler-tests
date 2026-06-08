@@ -1,0 +1,5 @@
+sum(3): 60
+sum(5): 15
+avg: 20.0
+max: 9
+[LOG] value=42 name=test

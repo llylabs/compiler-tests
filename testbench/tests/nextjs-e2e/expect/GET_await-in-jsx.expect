@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Profile: User-alice</h1>
+CONTAINS: Age: 25
+CONTAINS: Theme: dark
+CONTAINS: read, write, delete

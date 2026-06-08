@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: "users"
+CONTAINS: "Alice"
+CONTAINS: "total":2

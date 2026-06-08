@@ -1,0 +1,18 @@
+--- base ptr delete ---
+Base(1)
+Derived(1,100)
+~Derived(1,100)
+~Base(1)
+--- deep hierarchy ---
+Base(2)
+Derived(2,20)
+SubDerived(2)
+~SubDerived(2)
+~Derived(2,20)
+~Base(2)
+--- stack ---
+Base(3)
+Derived(3,300)
+~Derived(3,300)
+~Base(3)
+done

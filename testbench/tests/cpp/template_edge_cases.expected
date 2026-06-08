@@ -1,0 +1,14 @@
+int integral: 1
+double integral: 0
+char integral: 1
+5! = 120
+10! = 3628800
+0! = 1
+wrapper top: 20
+size of type: 4
+size of type: 8
+fixed sum: 35
+default buffer: 10
+custom buffer: 3
+double_val(21) = 42
+double_val(3.5) = 7

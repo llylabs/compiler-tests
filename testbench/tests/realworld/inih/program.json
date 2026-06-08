@@ -1,0 +1,25 @@
+{
+  "id": "inih",
+  "label": "inih r58 (minimal INI parser, pure C)",
+  "compiler": "c-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.c",
+    "ini.c"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "host=ini.local",
+      "port=9090",
+      "user=alice",
+      "inih:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 30000
+  }
+}

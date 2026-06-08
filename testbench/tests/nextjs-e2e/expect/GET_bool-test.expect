@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Bool Test</h1>
+CONTAINS: Hidden default
+CONTAINS: <span>End</span>
+NOT-CONTAINS: Visible

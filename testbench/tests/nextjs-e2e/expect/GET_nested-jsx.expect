@@ -1,0 +1,9 @@
+STATUS: 200
+CONTAINS: <h1>Nested JSX</h1>
+CONTAINS: Article Title
+CONTAINS: Column 1 line 1
+CONTAINS: Column 1 line 2
+CONTAINS: Column 2 line 1
+CONTAINS: Bullet A
+CONTAINS: Sub-bullet B.1
+CONTAINS: End of article

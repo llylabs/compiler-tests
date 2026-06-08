@@ -1,0 +1,19 @@
+--- ctor/dtor dispatch ---
+ctor tag: Logger
+FileLogger ctor tag: FileLogger
+FileLogger dtor tag: FileLogger
+dtor tag: Logger
+--- covariant ---
+Derived::clone
+cloned val: 42
+--- deep hierarchy ---
+f() = 1
+f() = 2
+f() = 3
+f() = 3
+f() = 5
+--- hiding vs override ---
+Child::method
+Parent::method
+Child::vmethod
+Child::vmethod

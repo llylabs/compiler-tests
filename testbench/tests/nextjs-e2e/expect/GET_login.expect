@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: <h1>Login</h1>
+CONTAINS: <input
+CONTAINS: type="email"
+CONTAINS: type="password"
+CONTAINS: Sign in

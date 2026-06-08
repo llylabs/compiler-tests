@@ -1,0 +1,13 @@
+count: 1
+count: 2
+count: 3
+count: 4
+count: 5
+acc: 10
+acc: 30
+acc: 60
+toggle: on
+toggle: off
+toggle: on
+toggle: off
+fib(0)=0 fib(5)=5 fib(10)=55 fib(15)=610

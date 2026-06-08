@@ -1,0 +1,6 @@
+sprintf: Hello World, you are 42
+sprintf float: pi=3.1416
+snprintf: This is a
+would need: 26
+exact: Hello
+built: 1,2,3,4,5

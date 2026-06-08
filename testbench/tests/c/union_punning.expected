@@ -1,0 +1,6 @@
+int: 42
+float: 3.14
+int: 99
+float: 2.5
+char: X
+sizeof union=4

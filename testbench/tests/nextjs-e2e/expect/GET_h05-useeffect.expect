@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: <h1>H05 useEffect</h1>
+CONTAINS: EffectStub OK
+NOT-CONTAINS: useEffect is not a function
+NOT-CONTAINS: useLayoutEffect is not a function
+NOT-CONTAINS: THIS_WOULD_THROW_IF_INVOKED

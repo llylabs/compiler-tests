@@ -1,0 +1,8 @@
+STATUS: 200
+CONTAINS: <h1>j03</h1>
+CONTAINS: outer-try;
+CONTAINS: o=o;
+CONTAINS: inner-try;
+CONTAINS: inner-catch=inner-boom;
+CONTAINS: outer-after-inner;
+NOT-CONTAINS: outer-catch=

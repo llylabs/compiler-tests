@@ -1,0 +1,11 @@
+volatile: 5
+side effect: val=10 count=1
+const fold: 1
+loop inv: 6
+alias: a=2 b=2
+div safe: 2147483647
+mod: 1 -1 1
+guarded div: 20
+both called: sum=30 a=1 b=1
+strength: 180
+tail: 5050

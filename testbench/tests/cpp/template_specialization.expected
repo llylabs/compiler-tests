@@ -1,0 +1,9 @@
+int: int
+double: double
+char: char
+float: unknown
+[int] 42
+[double] 3.14
+[char] generic
+Pair<T,U>
+Pair<T,T> same type

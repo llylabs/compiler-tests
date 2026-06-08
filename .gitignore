@@ -1,0 +1,28 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Testbench runtime artefacts
+testbench/output/
+testbench/.data/
+testbench/dist/
+testbench/history.json
+testbench/baselines/
+
+# Built binaries (built fresh in CI)
+bin/
+target/
+
+# Test fixture node_modules (installed per-suite at run time)
+testbench/tests/**/node_modules/
+testbench/tests/**/.next/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp

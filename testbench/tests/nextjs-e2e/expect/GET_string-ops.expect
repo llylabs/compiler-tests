@@ -1,0 +1,9 @@
+STATUS: 200
+CONTAINS: <h1>String Ops</h1>
+CONTAINS: Upper: HELLO WORLD
+CONTAINS: Lower: hello world
+CONTAINS: Sliced: Hello
+CONTAINS: Replaced: Hello Universe
+CONTAINS: Parts: 2
+CONTAINS: Concat: Hello World!
+CONTAINS: Length: 11

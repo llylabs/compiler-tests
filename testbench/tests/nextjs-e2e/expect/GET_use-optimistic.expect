@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: useOptimistic
+CONTAINS: <li>alpha</li>
+CONTAINS: <li>beta</li>
+CONTAINS: count: 2
+CONTAINS: pending: false

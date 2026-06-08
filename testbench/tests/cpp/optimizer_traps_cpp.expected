@@ -1,0 +1,11 @@
+sensor: 30
+heavy val: 42 copies: 0
+short-circuit AND: evals=1
+short-circuit OR: evals=1
+const prop: 42
+const arr sum: 6
+sizeof Empty: 1
+sizeof WithEmpty: 4
+hidden: 42
+dead store: 3
+unroll sum: 140

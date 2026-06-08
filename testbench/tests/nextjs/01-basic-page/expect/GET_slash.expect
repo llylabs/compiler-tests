@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: Hello from NEX
+CONTAINS: Next.js running on NEX runtime
+NOT-CONTAINS: Internal Server Error
+NOT-CONTAINS: Error:

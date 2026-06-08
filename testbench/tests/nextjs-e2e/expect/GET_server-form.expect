@@ -1,0 +1,7 @@
+STATUS: 200
+CONTAINS: <h1>Server Form</h1>
+CONTAINS: method="post"
+CONTAINS: <input
+CONTAINS: <textarea
+CONTAINS: My post
+CONTAINS: Create

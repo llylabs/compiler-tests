@@ -1,0 +1,12 @@
+STATUS: 200
+CONTAINS: About NEX Blog
+CONTAINS: Technology Stack
+CONTAINS: NEX Runtime
+CONTAINS: React
+CONTAINS: Next.js
+CONTAINS: WebAssembly
+CONTAINS: By the numbers
+CONTAINS: How it works
+CONTAINS: BIR
+CONTAINS: Wasmtime
+NOT-CONTAINS: Internal Server Error

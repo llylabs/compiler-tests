@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: Legacy Head
+CONTAINS: <title>Legacy Head Title</title>
+CONTAINS: <meta name="description" content="from next/head"
+CONTAINS: <meta name="og:custom" content="hi"
+CONTAINS: <link rel="preload" href="/foo.css" as="style"

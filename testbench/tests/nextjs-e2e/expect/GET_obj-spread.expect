@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Spread</h1>
+CONTAINS: card
+CONTAINS: article
+CONTAINS: Hello with spread props

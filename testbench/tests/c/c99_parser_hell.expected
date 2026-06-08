@@ -1,0 +1,12 @@
+(10,20)
+compound arr: 5 10 15 20
+config: 800x600 flags=1 depth=0
+desig arr: 0 0 42 0 99
+variant int: 42
+variant xy: 10 20
+bool: 1 0 1
+for-decl sum: 45
+flex arr: 100 200 300
+nested desig: (1,2) (3,4)
+comma: 42
+ternary: r=10 c1=1 c2=1

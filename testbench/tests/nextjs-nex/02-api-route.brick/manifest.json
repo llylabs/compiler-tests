@@ -1,0 +1,39 @@
+{
+  "name": "02-api-route",
+  "version": "1.0.0",
+  "source_lang": "javascript",
+  "entrypoint": "brick_0",
+  "bricks": [
+    {
+      "id": "brick_0",
+      "functions": [
+        "server::__run_microtasks",
+        "server::__next_json",
+        "server::__next_redirect",
+        "server::__init__",
+        "02_api_route::__run_microtasks",
+        "02_api_route::GET",
+        "02_api_route::__init__",
+        "__init__"
+      ],
+      "is_entrypoint": true,
+      "parallelizable": false,
+      "has_io": true,
+      "reads_globals": [],
+      "writes_globals": [],
+      "imports": [],
+      "exports": [
+        "server::__run_microtasks",
+        "server::__next_json",
+        "server::__next_redirect",
+        "server::__init__",
+        "02_api_route::__run_microtasks",
+        "02_api_route::GET",
+        "02_api_route::__init__",
+        "__init__"
+      ]
+    }
+  ],
+  "execution_flow": {},
+  "globals": {}
+}

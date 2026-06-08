@@ -1,0 +1,7 @@
+Rect 3x4
+  area=12
+Circle r=5
+  area=75
+Rect 6x8
+  area=48
+total area: 123

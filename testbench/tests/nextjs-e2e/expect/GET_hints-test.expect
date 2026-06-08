@@ -1,0 +1,7 @@
+STATUS: 200
+CONTAINS: Hints Test
+CONTAINS: <link rel="modulepreload" href="/_lly/hydrate/
+CONTAINS: <link rel="preconnect" href="https://images.example.com"/>
+CONTAINS: <link rel="dns-prefetch" href="https://images.example.com"/>
+CONTAINS: <link rel="preconnect" href="https://cdn.other.io"/>
+CONTAINS: <link rel="dns-prefetch" href="https://cdn.other.io"/>

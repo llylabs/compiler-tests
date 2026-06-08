@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>I-02 Suspense Marker</h1>
+CONTAINS: data-lly-hydrate-boundary="B:
+CONTAINS: resolved content inside suspense
+NOT-CONTAINS: loading fallback

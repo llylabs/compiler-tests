@@ -1,0 +1,4 @@
+caught void*: null
+caught int*: null
+correct: caught as void*
+done

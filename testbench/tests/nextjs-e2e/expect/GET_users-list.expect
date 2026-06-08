@@ -1,0 +1,8 @@
+STATUS: 200
+CONTAINS: <h1>Users</h1>
+CONTAINS: Alice
+CONTAINS: admin
+CONTAINS: Bob
+CONTAINS: Charlie
+CONTAINS: Total: 3
+CONTAINS: Users List

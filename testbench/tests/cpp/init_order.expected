@@ -1,0 +1,5 @@
+init order: 1 2 3
+a=10 b=15 c=30
+counter: 100
+modified: 200
+same: 1

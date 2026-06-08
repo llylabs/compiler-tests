@@ -1,0 +1,74 @@
+{
+  "id": "lua",
+  "label": "Lua 5.4.6 standalone interpreter",
+  "source": {
+    "url": "https://www.lua.org/ftp/lua-5.4.6.tar.gz",
+    "sha256": "7d5ea1b9cb6aa0b59ca3dde1c6adcb57ef83a1ba8e5432c0ecd06bf439b3ad88",
+    "type": "tar.gz",
+    "extract_dir": "lua-5.4.6"
+  },
+  "prelude_headers": [
+    "stdio.h",
+    "stdlib.h",
+    "string.h",
+    "time.h",
+    "math.h"
+  ],
+  "defines": [
+    "LUA_USE_POSIX",
+    "LUA_USE_DLOPEN 0",
+    "LUAI_ASSERT 0",
+    "EXIT_SUCCESS 0",
+    "EXIT_FAILURE 1"
+  ],
+  "sources": [
+    "src/lapi.c",
+    "src/lcode.c",
+    "src/lctype.c",
+    "src/ldebug.c",
+    "src/ldo.c",
+    "src/ldump.c",
+    "src/lfunc.c",
+    "src/lgc.c",
+    "src/llex.c",
+    "src/lmem.c",
+    "src/lobject.c",
+    "src/lopcodes.c",
+    "src/lparser.c",
+    "src/lstate.c",
+    "src/lstring.c",
+    "src/ltable.c",
+    "src/ltm.c",
+    "src/lundump.c",
+    "src/lvm.c",
+    "src/lzio.c",
+    "src/lauxlib.c",
+    "src/lbaselib.c",
+    "src/lcorolib.c",
+    "src/ldblib.c",
+    "src/liolib.c",
+    "src/lmathlib.c",
+    "src/loadlib.c",
+    "src/loslib.c",
+    "src/lstrlib.c",
+    "src/ltablib.c",
+    "src/lutf8lib.c",
+    "src/linit.c",
+    "src/lua.c"
+  ],
+  "include_dirs": [
+    "src"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "stdin": "print(2^10); print('lua version', _VERSION)\n",
+    "expect_stdout_contains": [
+      "1024",
+      "Lua 5.4"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 30000
+  }
+}

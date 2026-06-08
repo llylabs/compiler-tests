@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: NEX E2E Test App
+CONTAINS: Running on NEX runtime
+CONTAINS: <html
+CONTAINS: </html>
+NOT-CONTAINS: Internal Server Error

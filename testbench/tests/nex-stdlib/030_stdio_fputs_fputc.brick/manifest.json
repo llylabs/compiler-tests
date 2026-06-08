@@ -1,0 +1,85 @@
+{
+  "version": "1.0",
+  "name": "030_stdio_fputs_fputc.brick",
+  "source_lang": "c",
+  "entrypoint": "brick_001",
+  "abi_version": "legacy.static.v0",
+  "toolchain": {
+    "target": "wasm32-unknown-unknown",
+    "frontend": "c",
+    "llvm_version": "20.1.2",
+    "compat_profile": "legacy",
+    "brick_mode": "auto",
+    "lto": false
+  },
+  "shared_memory": false,
+  "shared_table": false,
+  "init_order": [
+    "brick_001"
+  ],
+  "fini_order": [
+    "brick_001"
+  ],
+  "bricks": [
+    {
+      "id": "brick_001",
+      "wasm": "bricks/brick_001.wasm",
+      "functions": [
+        "main"
+      ],
+      "imports": [],
+      "inputs": [],
+      "outputs": [],
+      "globals_read": [
+        "stdout"
+      ],
+      "globals_write": [
+        "stdout"
+      ],
+      "flags": {
+        "parallelizable": false,
+        "local_only": false,
+        "has_fallback": false
+      }
+    }
+  ],
+  "globals": [
+    {
+      "name": "stdout",
+      "offset": 0,
+      "type": "local_unnamed_addr global ptr, align 4",
+      "size": 8,
+      "init": "globals/stdout.bin"
+    },
+    {
+      "name": "__main_void",
+      "offset": 8,
+      "type": "hidden alias i32 (), ptr @main",
+      "size": 8,
+      "init": "globals/__main_void.bin"
+    }
+  ],
+  "memory": {
+    "initial_pages": 512,
+    "max_pages": 1024,
+    "shared": false
+  },
+  "execution_flow": {},
+  "conflicts": [],
+  "global_affinity": {
+    "__main_void": {
+      "primary": "brick_001",
+      "writers": [],
+      "readers": []
+    },
+    "stdout": {
+      "primary": "brick_001",
+      "writers": [
+        "brick_001"
+      ],
+      "readers": [
+        "brick_001"
+      ]
+    }
+  }
+}

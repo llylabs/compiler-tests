@@ -1,0 +1,16 @@
+--- create ---
+Base()
+Left()
+Right()
+Diamond()
+--- calls ---
+Diamond val=30
+Diamond val=30
+Diamond val=30
+Diamond val=30
+after l->val=99: r->val=99 b->val=99
+--- destroy ---
+~Diamond()
+~Right()
+~Left()
+~Base()

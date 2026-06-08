@@ -1,0 +1,9 @@
+color 0: red
+color 1: green
+color 2: blue
+color 3: yellow
+200: OK
+404: Not Found
+500: Internal Error
+fallthrough: 110
+default: unknown

@@ -1,0 +1,339 @@
+{
+  "plugins_dir": "../../farm/plugins/target/release",
+  "tests_dir": "./tests",
+  "include_path": "../../machineroom/compiler/static/include",
+  "nex": "/usr/local/bin/nex",
+  "data_dir": ".data",
+  "suites": [
+    {
+      "id": "c-brick",
+      "runner": "c-brick",
+      "label": "C Brick Compilation"
+    },
+    {
+      "id": "pthread",
+      "runner": "pthread",
+      "label": "M6 Threading DoD"
+    },
+    {
+      "id": "m7",
+      "runner": "m7",
+      "label": "M7 Rust+Go DoD"
+    },
+    {
+      "id": "cpp-brick",
+      "runner": "cpp-brick",
+      "label": "C++ Brick Compilation"
+    },
+    {
+      "id": "brick-format",
+      "runner": "brick-format",
+      "label": "Brick Format Validation"
+    },
+    {
+      "id": "c-testsuite",
+      "runner": "c-testsuite",
+      "label": "C Testsuite",
+      "config": {
+        "repo": "https://github.com/c-testsuite/c-testsuite",
+        "data_dir": ".data/c-testsuite",
+        "concurrency": 16
+      }
+    },
+    {
+      "id": "gcc-torture",
+      "runner": "gcc-torture",
+      "label": "GCC C Torture",
+      "config": {
+        "repo": "https://github.com/gcc-mirror/gcc",
+        "data_dir": ".data/gcc",
+        "sparse_paths": [
+          "gcc/testsuite/gcc.c-torture"
+        ],
+        "concurrency": 16
+      }
+    },
+    {
+      "id": "gcc-dg",
+      "runner": "gcc-dg",
+      "label": "GCC C Diagnostics",
+      "config": {
+        "data_dir": ".data/gcc",
+        "concurrency": 16
+      }
+    },
+    {
+      "id": "gcc-dg-cpp",
+      "runner": "gcc-dg-cpp",
+      "label": "GCC C++ Diagnostics",
+      "config": {
+        "data_dir": ".data/gcc",
+        "concurrency": 16
+      }
+    },
+    {
+      "id": "llvm-single",
+      "runner": "llvm-single",
+      "label": "LLVM SingleSource",
+      "config": {
+        "repo": "https://github.com/llvm/llvm-test-suite",
+        "data_dir": ".data/llvm",
+        "concurrency": 16
+      }
+    },
+    {
+      "id": "test262",
+      "runner": "test262",
+      "label": "ECMAScript Test262",
+      "config": {
+        "repo": "https://github.com/tc39/test262",
+        "data_dir": ".data/test262",
+        "concurrency": 2,
+        "include_modules": false,
+        "include_async": false
+      }
+    },
+    {
+      "id": "wpt",
+      "runner": "wpt",
+      "label": "Web Platform Tests (WinterTC subset)",
+      "config": {
+        "repo": "https://github.com/web-platform-tests/wpt",
+        "data_dir": ".data/wpt",
+        "concurrency": 2,
+        "timeout_ms": 10000,
+        "include_dirs": [
+          "url",
+          "encoding",
+          "streams",
+          "hr-time",
+          "console"
+        ]
+      }
+    },
+    {
+      "id": "react-ssr",
+      "runner": "react-ssr",
+      "label": "React SSR Compatibility",
+      "config": {
+        "tests_dir": "tests/react",
+        "concurrency": 4,
+        "timeout_ms": 15000
+      }
+    },
+    {
+      "id": "nextjs-nex",
+      "runner": "nextjs-nex",
+      "label": "Next.js NEX-Native",
+      "config": {
+        "tests_dir": "tests/nextjs-nex",
+        "concurrency": 4,
+        "timeout_ms": 15000
+      }
+    },
+    {
+      "id": "nextjs-e2e",
+      "runner": "nextjs-e2e",
+      "label": "Next.js E2E Integration",
+      "config": {
+        "tests_dir": "tests/nextjs-e2e",
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "nextjs-compat",
+      "runner": "nextjs-compat",
+      "label": "Next.js Compatibility",
+      "config": {
+        "tests_dir": "tests/nextjs",
+        "timeout_ms": 30000,
+        "build_cache": true
+      }
+    },
+    {
+      "id": "http-compat",
+      "runner": "http-compat",
+      "label": "Node.js HTTP Compatibility",
+      "config": {
+        "tests_dir": "tests/node-compat",
+        "concurrency": 2,
+        "timeout_ms": 20000
+      }
+    },
+    {
+      "id": "brick-splitting",
+      "runner": "brick-splitting",
+      "label": "Brick Splitting",
+      "config": {
+        "concurrency": 1,
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "cargo-unit",
+      "runner": "cargo",
+      "label": "Cargo Unit Tests",
+      "config": {
+        "workspace": "/home/leon/prod/machineroom"
+      }
+    },
+    {
+      "id": "chibicc",
+      "runner": "chibicc",
+      "label": "chibicc (C11 Features)",
+      "config": {
+        "repo": "https://github.com/rui314/chibicc",
+        "data_dir": ".data/chibicc",
+        "concurrency": 2,
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "csmith",
+      "runner": "csmith",
+      "label": "Csmith (generative C)",
+      "config": {
+        "count": 500,
+        "reference_compiler": "gcc",
+        "concurrency": 8
+      }
+    },
+    {
+      "id": "emscripten-core",
+      "runner": "emscripten-core",
+      "label": "Emscripten Core (portable C/C++)",
+      "config": {
+        "repo": "https://github.com/emscripten-core/emscripten",
+        "data_dir": ".data/emscripten",
+        "concurrency": 16,
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "musl-libc-test",
+      "runner": "musl-libc-test",
+      "label": "musl libc-test",
+      "config": {
+        "repo": "https://github.com/nicowilliams/libc-test",
+        "data_dir": ".data/musl-libc-test",
+        "concurrency": 16,
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "nex-stdlib",
+      "runner": "nex-stdlib",
+      "label": "NEX Standard Library (C/C++)",
+      "config": {
+        "concurrency": 2,
+        "timeout_ms": 30000
+      }
+    },
+    {
+      "id": "rust-brick",
+      "runner": "rust-brick",
+      "label": "Rust Brick Compilation"
+    },
+    {
+      "id": "rust-runpass",
+      "runner": "rust-runpass",
+      "label": "Rust Run-Pass (rustc + Miri)",
+      "config": {
+        "rustc_repo": "https://github.com/rust-lang/rust",
+        "miri_repo": "https://github.com/rust-lang/miri",
+        "data_dir": ".data/rust",
+        "concurrency": 16,
+        "timeout_ms": 60000,
+        "target": "wasm32-wasip1",
+        "include_miri": true
+      }
+    },
+    {
+      "id": "go-testdir",
+      "runner": "go-testdir",
+      "label": "Go test/ (golang/go)",
+      "config": {
+        "go_repo": "https://github.com/golang/go",
+        "data_dir": ".data/go",
+        "concurrency": 16,
+        "timeout_ms": 60000,
+        "include_subdirs": [
+          "fixedbugs",
+          "interface",
+          "typeparam",
+          "ken",
+          "chan",
+          "method",
+          "closure",
+          "convert",
+          "nilptr",
+          "stack",
+          "syntax"
+        ],
+        "max_tests": 0
+      }
+    },
+    {
+      "id": "benchgame",
+      "runner": "benchgame",
+      "label": "Benchmarks Game (Rust+Go diff)",
+      "config": {
+        "bg_repo": "https://github.com/madnight/benchmarksgame",
+        "data_dir": ".data/benchgame",
+        "fixtures_dir": "tests/benchgame",
+        "concurrency": 4,
+        "timeout_ms": 60000,
+        "langs": [
+          "rust",
+          "go"
+        ]
+      }
+    },
+    {
+      "id": "e2e-deploy",
+      "runner": "e2e-deploy",
+      "label": "E2E Deploy (Local \u2192 Cap \u2192 Service)",
+      "config": {
+        "tests_dir": "tests/e2e-deploy",
+        "timeout_ms": 120000
+      }
+    },
+    {
+      "id": "native-server",
+      "runner": "native-server",
+      "label": "C/C++ Server (HTTP)",
+      "config": {
+        "tests_dir": "tests/native-server",
+        "concurrency": 2,
+        "timeout_ms": 30000,
+        "compile_timeout_ms": 120000
+      }
+    },
+    {
+      "id": "realworld-build",
+      "runner": "realworld-build",
+      "label": "Real-World C/C++ Programs (build + smoke + caps)",
+      "config": {
+        "timeout_ms": 600000,
+        "offline_only": false
+      }
+    },
+    {
+      "id": "cap-http",
+      "runner": "cap-http",
+      "label": "CAP HTTP direct-run (Phase E1)",
+      "config": {
+        "cap_root": "../../cap",
+        "tests_dir": "tests/c",
+        "host_port": 19191,
+        "boot_timeout_ms": 60000,
+        "whitelist": [
+          "binary_tree",
+          "arithmetic",
+          "bitwise_ops",
+          "exit_code"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>ISR Test</h1>
+CONTAINS: Value: isr-data
+CONTAINS: Cache-revalidate: 60s

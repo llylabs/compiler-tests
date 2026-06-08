@@ -1,0 +1,34 @@
+{
+  "id": "simdjson",
+  "label": "simdjson 3.10.1 (production-grade JSON parser, ~174k LOC amalgamation, fallback impl on wasm32)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "url": "https://github.com/simdjson/simdjson/archive/refs/tags/v3.10.1.tar.gz",
+    "sha256": "1e8f881cb2c0f626c56cd3665832f1e97b9d4ffc648ad9e1067c134862bba060",
+    "type": "tar.gz",
+    "extract_dir": "simdjson-3.10.1"
+  },
+  "sources": [
+    "singleheader/simdjson.cpp"
+  ],
+  "include_dirs": ["singleheader"],
+  "driver_file": "driver.cpp",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "name=Alice",
+      "age=30",
+      "tags[0]=cpp",
+      "tags[1]=wasm",
+      "tags[2]=prod",
+      "nested.x=1",
+      "nested.y=2",
+      "items=3",
+      "OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 120000
+  }
+}

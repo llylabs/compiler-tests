@@ -1,0 +1,19 @@
+dec: 255
+hex: ff
+HEX: FF
+oct: 377
+[        42]
+[42        ]
+[00042]
+float: 3.142
+sci: 1.23e+04
+[        hi]
+[hi        ]
+[hel]
+char: A
+100%
+neg: -42
+zero: 0
+3 + 4 = 7
+long: 1000000
+unsigned: 4294967295

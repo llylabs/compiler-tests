@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Async Chain</h1>
+CONTAINS: Name: alpha
+CONTAINS: Count: 5
+CONTAINS: Double: 10

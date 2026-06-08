@@ -1,0 +1,7 @@
+downcast ok: Derived extra=42
+failed downcast: null
+wrong type: null
+upcast: ok
+multi A: ok
+multi B: ok
+done

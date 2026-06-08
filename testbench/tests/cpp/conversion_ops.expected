@@ -1,0 +1,7 @@
+bool true: yes
+bool false: no
+to int: 3
+to double: 3.7
+string: hello len=5
+value: 42 (accesses: 1)
+value: 42 (accesses: 2)

@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Stream Test</h1>
+CONTAINS: rts type: function
+CONTAINS: rtrs type: function
+

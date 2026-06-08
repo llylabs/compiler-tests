@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: <h1>Heading One</h1>
+CONTAINS: <strong>bold</strong>
+CONTAINS: <div class="boxed">
+CONTAINS: JSX block inside MDX
+CONTAINS: <li>two</li>

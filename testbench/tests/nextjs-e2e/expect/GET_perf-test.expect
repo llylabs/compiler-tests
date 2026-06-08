@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: <h1>Perf Test</h1>
+CONTAINS: Rendered 100 items
+CONTAINS: Item 0
+CONTAINS: Item 50
+CONTAINS: Item 99

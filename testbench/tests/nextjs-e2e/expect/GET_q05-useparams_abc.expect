@@ -1,0 +1,3 @@
+STATUS: 200
+CONTAINS: <h1>q05-useparams</h1>
+CONTAINS: params={"id":"abc"}

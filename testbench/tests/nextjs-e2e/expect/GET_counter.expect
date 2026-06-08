@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>Counter</h1>
+CONTAINS: Count: 0
+CONTAINS: <button

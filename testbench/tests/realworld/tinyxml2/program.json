@@ -1,0 +1,31 @@
+{
+  "id": "tinyxml2",
+  "label": "tinyxml2 10.0.0 (XML parser, RAII, EH)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "url": "https://github.com/leethomason/tinyxml2/archive/refs/tags/10.0.0.tar.gz",
+    "sha256": "3bdf15128ba16686e69bce256cc468e76c7b94ff2c7f391cc5ec09e40bff3839",
+    "type": "tar.gz",
+    "extract_dir": "tinyxml2-10.0.0"
+  },
+  "sources": [
+    "tinyxml2.cpp"
+  ],
+  "driver_file": "driver.cpp",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "parse:OK",
+      "root:catalog",
+      "child:book",
+      "title:Effective C++",
+      "author:Scott Meyers",
+      "price:39.99",
+      "OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 30000
+  }
+}

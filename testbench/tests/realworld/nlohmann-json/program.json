@@ -1,0 +1,28 @@
+{
+  "id": "nlohmann-json",
+  "label": "nlohmann/json 3.11.3 (single-header JSON, heavy templates)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "parse:OK",
+      "name:Alice",
+      "age:30",
+      "tags:c++,wasm,prod",
+      "nested.x:1",
+      "nested.y:2",
+      "roundtrip:OK",
+      "OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

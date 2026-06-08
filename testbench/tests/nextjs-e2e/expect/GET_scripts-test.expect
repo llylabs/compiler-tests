@@ -1,0 +1,5 @@
+STATUS: 200
+CONTAINS: <h1>Scripts</h1>
+CONTAINS: <script
+CONTAINS: src="/analytics.js"
+CONTAINS: id="analytics"

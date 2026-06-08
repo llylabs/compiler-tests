@@ -1,0 +1,7 @@
+STATUS: 200
+CONTAINS: <h1>Map Render</h1>
+CONTAINS: Apple
+CONTAINS: Banana
+CONTAINS: Cherry
+CONTAINS: Filtered count: 2
+CONTAINS: Total: 6

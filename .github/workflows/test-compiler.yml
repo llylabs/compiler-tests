@@ -1,0 +1,190 @@
+name: Test Compiler
+
+on:
+  workflow_dispatch:
+    inputs:
+      suites:
+        description: "Comma-separated suite IDs (or 'all')"
+        required: false
+        default: "c-brick,cpp-brick,nex-stdlib,realworld-build,brick-format"
+        type: string
+      machineroom_ref:
+        description: "machineroom branch/SHA"
+        required: false
+        default: "main"
+        type: string
+      nex_ref:
+        description: "oldies/nex branch/SHA"
+        required: false
+        default: "main"
+        type: string
+      farm_ref:
+        description: "farm branch/SHA (für plugins)"
+        required: false
+        default: "main"
+        type: string
+
+  schedule:
+    # Nightly volle Suite um 02:00 UTC
+    - cron: '0 2 * * *'
+
+  push:
+    branches: [main]
+    paths:
+      - 'testbench/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+# Verhindert parallele Runs auf demselben Branch
+concurrency:
+  group: test-compiler-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write    # results/<date>.json committen
+  issues: write      # Auto-Issues bei Regressions
+
+jobs:
+  test:
+    name: Test compiler against ${{ inputs.machineroom_ref || 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      # ─── Checkout this repo ─────────────────────────────────
+      - name: Checkout compiler-tests
+        uses: actions/checkout@v4
+        with:
+          path: compiler-tests
+
+      # ─── Checkout machineroom (Rust Compiler-Workspace) ────
+      - name: Checkout machineroom
+        uses: actions/checkout@v4
+        with:
+          repository: lilylabs/machineroom
+          ref: ${{ inputs.machineroom_ref || 'main' }}
+          ssh-key: ${{ secrets.MACHINEROOM_DEPLOY_KEY }}
+          path: machineroom
+          fetch-depth: 1
+
+      # ─── Checkout farm/plugins ─────────────────────────────
+      - name: Checkout farm
+        uses: actions/checkout@v4
+        with:
+          repository: lilylabs/farm
+          ref: ${{ inputs.farm_ref || 'main' }}
+          ssh-key: ${{ secrets.FARM_DEPLOY_KEY }}
+          path: farm
+          fetch-depth: 1
+        continue-on-error: true
+
+      # ─── Checkout oldies/nex (Legacy JS-Compiler) ──────────
+      - name: Checkout oldies/nex
+        uses: actions/checkout@v4
+        with:
+          repository: lilylabs/oldies-nex
+          ref: ${{ inputs.nex_ref || 'main' }}
+          ssh-key: ${{ secrets.NEX_DEPLOY_KEY }}
+          path: oldies-nex
+          fetch-depth: 1
+        continue-on-error: true
+
+      # ─── System Dependencies ───────────────────────────────
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            jq \
+            zstd \
+            curl \
+            ca-certificates
+
+      # ─── Rust Toolchain mit Cache ──────────────────────────
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-wasip1
+
+      - name: Rust build cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            machineroom
+            oldies-nex
+            farm/plugins
+          shared-key: compiler-tests
+
+      # ─── Node Toolchain ────────────────────────────────────
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: compiler-tests/testbench/package.json
+
+      # ─── Build Compilers ───────────────────────────────────
+      - name: Build compilers
+        id: build
+        run: |
+          chmod +x compiler-tests/scripts/build-compilers.sh
+          compiler-tests/scripts/build-compilers.sh
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
+
+      # ─── Cache External Test Corpora ───────────────────────
+      - name: Restore corpora cache
+        uses: actions/cache@v4
+        with:
+          path: compiler-tests/testbench/.data
+          key: corpora-v1-${{ hashFiles('compiler-tests/testbench/testbench.ci.json') }}
+          restore-keys: |
+            corpora-v1-
+
+      # ─── npm install ───────────────────────────────────────
+      - name: Install testbench dependencies
+        working-directory: compiler-tests/testbench
+        run: npm install
+
+      # ─── Run Suites ────────────────────────────────────────
+      - name: Run test suites
+        id: tests
+        working-directory: compiler-tests
+        run: |
+          chmod +x scripts/run-suites.sh
+          scripts/run-suites.sh "${{ inputs.suites || 'c-brick,cpp-brick,nex-stdlib,realworld-build,brick-format' }}"
+        continue-on-error: true
+
+      # ─── Upload Report as Artifact ─────────────────────────
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-${{ github.run_id }}
+          path: |
+            compiler-tests/results/
+            compiler-tests/testbench/output/
+          retention-days: 90
+
+      # ─── Commit Result-JSON ins Repo ───────────────────────
+      - name: Commit result summary
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        working-directory: compiler-tests
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          RESULT_FILE="results/$DATE.json"
+          if [ -f results/run-summary.json ]; then
+            cp results/run-summary.json "$RESULT_FILE"
+            git config user.name  "compiler-test-bot"
+            git config user.email "bot@lilylabs.dev"
+            git add "$RESULT_FILE"
+            git commit -m "test run $DATE (machineroom@${{ inputs.machineroom_ref || 'main' }})" || echo "no changes"
+            git push || echo "push failed (likely no commits)"
+          fi
+
+      # ─── Final Step: Tests müssen grün gewesen sein ────────
+      - name: Fail if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: |
+          echo "::error::One or more test suites failed"
+          exit 1

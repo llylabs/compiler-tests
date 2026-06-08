@@ -1,0 +1,17 @@
+[LOG] hello world 42
+[LOG] simple
+STR: hello
+XSTR: 42
+pasted var: 99
+pasted func: 42
+RED: RED (0xFF0000)
+GREEN: GREEN (0x00FF00)
+BLUE: BLUE (0x0000FF)
+A(5) = 6
+ABS(-7) = 7
+CLAMP(15,0,10) = 10
+CLAMP(-3,0,10) = 0
+CLAMP(5,0,10) = 5
+swapped: 20 10
+array size: 7
+STDC: 1

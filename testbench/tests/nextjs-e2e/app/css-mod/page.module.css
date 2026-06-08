@@ -1,0 +1,11 @@
+.container {
+  padding: 20px;
+  background: #f5f5f5;
+}
+.heading {
+  font-size: 32px;
+  color: #333;
+}
+.item {
+  margin: 8px 0;
+}

@@ -1,0 +1,11 @@
+custom new: size=4 count=1
+Thing(42)
+t->value = 42
+~Thing(42)
+custom delete(sized): count=1
+custom new: size=4 count=2
+Thing(99)
+~Thing(99)
+custom delete(sized): count=2
+allocs: 2 deallocs: 2
+balanced: yes

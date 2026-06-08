@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>Template Test</h1>
+CONTAINS: data-template
+CONTAINS: Template wrapped:

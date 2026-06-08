@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "name": "optimizer_traps.brick",
+  "source_lang": "c",
+  "entrypoint": "brick_001",
+  "abi_version": "legacy.static.v0",
+  "toolchain": {
+    "target": "wasm32-unknown-unknown",
+    "frontend": "c",
+    "llvm_version": "20.1.2",
+    "compat_profile": "legacy",
+    "brick_mode": "auto",
+    "lto": false
+  },
+  "shared_memory": false,
+  "shared_table": false,
+  "init_order": [
+    "brick_001"
+  ],
+  "fini_order": [
+    "brick_001"
+  ],
+  "bricks": [
+    {
+      "id": "brick_001",
+      "wasm": "bricks/brick_001.wasm",
+      "functions": [
+        "alias_trap",
+        "division_edges",
+        "has_side_effect",
+        "increment_volatile",
+        "loop_invariant_trap",
+        "main",
+        "side_a",
+        "side_b",
+        "strength_test",
+        "tail_sum",
+        "test_constant_folding",
+        "use_both"
+      ],
+      "imports": [],
+      "inputs": [],
+      "outputs": [],
+      "globals_read": [
+        "order_b",
+        "side_effect_counter",
+        "order_a",
+        "vol_counter"
+      ],
+      "globals_write": [
+        "side_effect_counter",
+        "order_a",
+        "order_b",
+        "vol_counter"
+      ],
+      "flags": {
+        "parallelizable": false,
+        "local_only": false,
+        "has_fallback": false
+      }
+    }
+  ],
+  "globals": [
+    {
+      "name": "vol_counter",
+      "offset": 0,
+      "type": "hidden global i32 0, align 4",
+      "size": 4,
+      "init": "globals/vol_counter.bin",
+      "sync_hint": "volatile"
+    },
+    {
+      "name": "side_effect_counter",
+      "offset": 4,
+      "type": "hidden local_unnamed_addr global i32 0, align 4",
+      "size": 4,
+      "init": "globals/side_effect_counter.bin"
+    },
+    {
+      "name": "order_a",
+      "offset": 8,
+      "type": "hidden local_unnamed_addr global i32 0, align 4",
+      "size": 4,
+      "init": "globals/order_a.bin"
+    },
+    {
+      "name": "order_b",
+      "offset": 12,
+      "type": "hidden local_unnamed_addr global i32 0, align 4",
+      "size": 4,
+      "init": "globals/order_b.bin"
+    },
+    {
+      "name": "__main_void",
+      "offset": 16,
+      "type": "hidden alias i32 (), ptr @main",
+      "size": 8,
+      "init": "globals/__main_void.bin"
+    }
+  ],
+  "memory": {
+    "initial_pages": 512,
+    "max_pages": 1024,
+    "shared": false
+  },
+  "execution_flow": {},
+  "conflicts": [
+    {
+      "global": "side_effect_counter",
+      "writers": [
+        "has_side_effect",
+        "main"
+      ],
+      "requires": "mutex"
+    },
+    {
+      "global": "vol_counter",
+      "writers": [
+        "increment_volatile",
+        "main"
+      ],
+      "requires": "mutex"
+    },
+    {
+      "global": "order_b",
+      "writers": [
+        "main",
+        "side_b"
+      ],
+      "requires": "mutex"
+    },
+    {
+      "global": "order_a",
+      "writers": [
+        "main",
+        "side_a"
+      ],
+      "requires": "mutex"
+    }
+  ],
+  "global_affinity": {
+    "order_b": {
+      "primary": "brick_001",
+      "writers": [
+        "brick_001"
+      ],
+      "readers": [
+        "brick_001"
+      ]
+    },
+    "__main_void": {
+      "primary": "brick_001",
+      "writers": [],
+      "readers": []
+    },
+    "side_effect_counter": {
+      "primary": "brick_001",
+      "writers": [
+        "brick_001"
+      ],
+      "readers": [
+        "brick_001"
+      ]
+    },
+    "vol_counter": {
+      "primary": "brick_001",
+      "writers": [
+        "brick_001"
+      ],
+      "readers": [
+        "brick_001"
+      ]
+    },
+    "order_a": {
+      "primary": "brick_001",
+      "writers": [
+        "brick_001"
+      ],
+      "readers": [
+        "brick_001"
+      ]
+    }
+  }
+}

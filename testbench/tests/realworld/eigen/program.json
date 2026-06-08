@@ -1,0 +1,40 @@
+{
+  "id": "eigen",
+  "label": "Eigen 3.4.0 (header-only linear algebra; Matrix/Vector arithmetic, decompositions, ~1.5MB headers, extreme template depth)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "url": "https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz",
+    "sha256": "8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72",
+    "type": "tar.gz",
+    "extract_dir": "eigen-3.4.0"
+  },
+  "sources": [],
+  "include_dirs": ["."],
+  "defines": [
+    "EIGEN_DONT_VECTORIZE",
+    "EIGEN_NO_DEBUG"
+  ],
+  "driver_file": "src/main.cpp",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "v.sum=15",
+      "v.norm2=55",
+      "M3.det=1",
+      "M3.tr=3",
+      "Mx.rows=2 cols=3",
+      "Mx(0,0)=1",
+      "Mx(1,2)=6",
+      "MxT.rows=3 cols=2",
+      "AB(0,0)=19",
+      "AB(1,1)=50",
+      "lu.solve.x0=2",
+      "lu.solve.x1=3",
+      "eigen:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 180000
+  }
+}

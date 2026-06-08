@@ -1,0 +1,8 @@
+x via ptr: 10
+y via ptr: 20
+hp via ptr: 100
+hp after modify: 50
+get_x via ptr: 10
+get_hp via ptr: 50
+via ->*: 50
+all fields: 10 20 50

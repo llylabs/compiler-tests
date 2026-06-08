@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: AsyncLocalStorage
+CONTAINS: inside: req-42:alice
+CONTAINS: outside: undefined

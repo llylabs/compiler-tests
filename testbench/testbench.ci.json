@@ -1,0 +1,85 @@
+{
+  "_comment": "CI-specific testbench config. Paths assume binaries built into ../bin/ by scripts/build-compilers.sh and tests/ next to this file.",
+  "plugins_dir": "../bin/farm-plugins",
+  "tests_dir": "./tests",
+  "include_path": "../../machineroom/compiler/static/include",
+  "nex": "../bin/nex",
+  "lly": "../bin/lly",
+  "data_dir": ".data",
+  "suites": [
+    {
+      "id": "c-brick",
+      "runner": "c-brick",
+      "label": "C Brick Compilation"
+    },
+    {
+      "id": "cpp-brick",
+      "runner": "cpp-brick",
+      "label": "C++ Brick Compilation"
+    },
+    {
+      "id": "brick-format",
+      "runner": "brick-format",
+      "label": "Brick Format Validation"
+    },
+    {
+      "id": "nex-stdlib",
+      "runner": "nex-stdlib",
+      "label": "Nex Stdlib",
+      "nex": "../bin/nex"
+    },
+    {
+      "id": "realworld-build",
+      "runner": "realworld-build",
+      "label": "Real-World C/C++ Programs (build + smoke + caps)",
+      "config": {
+        "timeout_ms": 600000,
+        "offline_only": false
+      }
+    },
+    {
+      "id": "c-testsuite",
+      "runner": "c-testsuite",
+      "label": "C Testsuite (c-testsuite/c-testsuite)",
+      "config": {
+        "repo": "https://github.com/c-testsuite/c-testsuite",
+        "data_dir": ".data/c-testsuite",
+        "concurrency": 8
+      }
+    },
+    {
+      "id": "gcc-torture",
+      "runner": "gcc-torture",
+      "label": "GCC C Torture",
+      "config": {
+        "repo": "https://github.com/gcc-mirror/gcc",
+        "data_dir": ".data/gcc",
+        "sparse_paths": ["gcc/testsuite/gcc.c-torture"],
+        "concurrency": 8
+      }
+    },
+    {
+      "id": "gcc-dg-cpp",
+      "runner": "gcc-dg-cpp",
+      "label": "GCC C++ Diagnostics",
+      "config": {
+        "repo": "https://github.com/gcc-mirror/gcc",
+        "data_dir": ".data/gcc",
+        "sparse_paths": ["gcc/testsuite/g++.dg"],
+        "concurrency": 8
+      }
+    },
+    {
+      "id": "test262",
+      "runner": "test262",
+      "label": "TC39 test262 (JS)",
+      "nex": "../bin/nex",
+      "config": {
+        "repo": "https://github.com/tc39/test262",
+        "data_dir": ".data/test262",
+        "concurrency": 8,
+        "timeout_ms": 30000
+      }
+    }
+  ]
+}

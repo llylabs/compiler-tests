@@ -1,0 +1,8 @@
+trivial: 1 2
+ctor 42
+move 42
+a=-1 b=42
+explicit: 20
+done
+dtor 42
+dtor -1

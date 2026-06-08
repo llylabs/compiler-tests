@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: href="/about"
+CONTAINS: Go to About
+CONTAINS: alt="Logo"
+CONTAINS: /logo.png
+CONTAINS: width="120"

@@ -1,0 +1,12 @@
+initial count: 0
+Counter 1 (total=1)
+Counter 2 (total=2)
+Counter 3 (total=3)
+inside scope: 3
+~Counter 3
+~Counter 2
+~Counter 1
+after scope: 0
+5! = 120
+gcd(12,8) = 4
+PI_APPROX = 3

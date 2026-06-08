@@ -1,0 +1,8 @@
+constructed 2: alive=1
+constructed 1: alive=2
+about to throw
+destructed 1: alive=1
+catch all: alive=1
+destructed 2: alive=0
+outer catch: 42 alive=0
+final: alive=0

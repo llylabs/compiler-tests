@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: .demo
+HEADER: cache-control: immutable
+HEADER: cache-control: max-age=31536000

@@ -1,0 +1,8 @@
+hello from lambda
+add: 7
+capture val: 20
+after change: 20
+counter: 3
+squared: 1 4 9 16 25
+iife: 42
+nested: 12

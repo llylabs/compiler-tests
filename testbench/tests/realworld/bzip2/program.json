@@ -1,0 +1,35 @@
+{
+  "id": "bzip2",
+  "label": "bzip2 1.0.8 library round-trip",
+  "source": {
+    "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+    "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+    "type": "tar.gz",
+    "extract_dir": "bzip2-1.0.8"
+  },
+  "defines": [
+    "BZ_NO_STDIO 0"
+  ],
+  "sources": [
+    "blocksort.c",
+    "huffman.c",
+    "crctable.c",
+    "randtable.c",
+    "compress.c",
+    "decompress.c",
+    "bzlib.c"
+  ],
+  "include_dirs": ["."],
+  "driver_file": "driver.c",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "stdin": "",
+    "expect_stdout_contains": [
+      "OK bzip2 round-trip"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 15000
+  }
+}

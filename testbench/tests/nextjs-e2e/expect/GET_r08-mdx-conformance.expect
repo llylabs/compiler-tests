@@ -1,0 +1,7 @@
+STATUS: 200
+CONTAINS: r08 conformance suite
+CONTAINS: <table>
+CONTAINS: <del>
+CONTAINS: type="checkbox"
+CONTAINS: <blockquote>
+CONTAINS: <a href="https://example.com">

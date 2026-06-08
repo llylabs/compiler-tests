@@ -1,0 +1,11 @@
+STATUS: 200
+CONTAINS: <h1>H04 useRef</h1>
+CONTAINS: RefValue: 42
+CONTAINS: Again: 42
+CONTAINS: String: hello
+CONTAINS: ObjectId: 7
+CONTAINS: placeholder="type here"
+NOT-CONTAINS: ref="[object Object]"
+NOT-CONTAINS: ref={
+NOT-CONTAINS: ref="undefined"
+NOT-CONTAINS: ref="null"

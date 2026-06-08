@@ -1,0 +1,10 @@
+STATUS: 200
+CONTAINS: Our Authors
+CONTAINS: Alice Chen
+CONTAINS: Bob Martinez
+CONTAINS: Carol Kim
+CONTAINS: Admin
+CONTAINS: Editor
+CONTAINS: Full-stack developer
+CONTAINS: Want to contribute?
+NOT-CONTAINS: Internal Server Error

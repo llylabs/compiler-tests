@@ -1,0 +1,2 @@
+getpriority=-1 errno=38
+setpriority=-1 errno=38

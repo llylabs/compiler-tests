@@ -1,0 +1,58 @@
+{
+  "id": "abseil-strings",
+  "label": "abseil-cpp 20240722.0 (strings module: StrCat/StrSplit/StrJoin/Numbers/Match/Ascii)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20240722.0.tar.gz",
+    "sha256": "f50e5ac311a81382da7fa75b97310e4b9006474f9560ac46f54a9967f07d4ae3",
+    "type": "tar.gz",
+    "extract_dir": "abseil-cpp-20240722.0"
+  },
+  "sources": [
+    "absl/base/internal/raw_logging.cc",
+    "absl/base/internal/throw_delegate.cc",
+    "absl/numeric/int128.cc",
+    "absl/strings/internal/memutil.cc",
+    "absl/strings/ascii.cc",
+    "absl/strings/match.cc",
+    "absl/strings/string_view.cc",
+    "absl/strings/numbers.cc",
+    "absl/strings/str_cat.cc",
+    "absl/strings/str_split.cc",
+    "absl/strings/charconv.cc",
+    "absl/strings/internal/charconv_bigint.cc",
+    "absl/strings/internal/charconv_parse.cc"
+  ],
+  "include_dirs": ["."],
+  "source_pragmas": {
+    "absl/strings/internal/charconv_parse.cc": {
+      "pre": [
+        "#define kAsciiToInt kAsciiToInt_charconv_parse",
+        "#define kEightSignificantHexDigits kEightSignificantHexDigits_charconv_parse",
+        "#define kPowerOf10 kPowerOf10_charconv_parse"
+      ],
+      "post": [
+        "#undef kAsciiToInt",
+        "#undef kEightSignificantHexDigits",
+        "#undef kPowerOf10"
+      ]
+    }
+  },
+  "driver_file": "src/main.cpp",
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "strcat=hello, world 42 3.14",
+      "split.n=5 first=a last=e",
+      "join=a|b|c|d|e",
+      "atoi=12345",
+      "starts=1 ends=1 ic=1",
+      "upper=HELLOWORLD",
+      "abseil-strings:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 120000
+  }
+}

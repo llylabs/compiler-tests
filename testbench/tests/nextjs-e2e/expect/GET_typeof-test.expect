@@ -1,0 +1,8 @@
+STATUS: 200
+CONTAINS: <h1>Typeof</h1>
+CONTAINS: str: string
+CONTAINS: num: number
+CONTAINS: bool: boolean
+CONTAINS: obj: object
+CONTAINS: fn: function
+CONTAINS: arr-check: yes

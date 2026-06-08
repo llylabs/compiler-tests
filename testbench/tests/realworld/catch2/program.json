@@ -1,0 +1,22 @@
+{
+  "id": "catch2",
+  "label": "Catch2 v2.13.10 (single-header unit testing)",
+  "compiler": "cpp-compiler",
+  "source": {
+    "local_dir": "src"
+  },
+  "sources": [
+    "main.cpp"
+  ],
+  "expected_caps": [
+    "wasi_snapshot_preview1"
+  ],
+  "smoke": {
+    "expect_stdout_contains": [
+      "All tests passed",
+      "catch2:OK"
+    ],
+    "expect_exit": 0,
+    "timeout_ms": 60000
+  }
+}

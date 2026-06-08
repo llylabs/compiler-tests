@@ -1,0 +1,11 @@
+STATUS: 200
+CONTAINS: Contact Us
+CONTAINS: <form
+CONTAINS: action="/api/contact"
+CONTAINS: method="POST"
+CONTAINS: for="name"
+CONTAINS: <input
+CONTAINS: <textarea
+CONTAINS: <button
+CONTAINS: required
+NOT-CONTAINS: Internal Server Error

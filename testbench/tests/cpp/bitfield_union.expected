@@ -1,0 +1,7 @@
+flags: r=1 w=0 x=1
+after set: r=1 w=1 x=1
+color: r=31 g=63 b=31
+color2: r=15 g=32 b=8
+union int: 42
+union float: 1.5
+sizeof Value: 4

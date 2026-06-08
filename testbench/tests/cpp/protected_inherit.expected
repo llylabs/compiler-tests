@@ -1,0 +1,6 @@
+PublicChild: pub=1 prot=2
+pub direct: 1
+Base pub=1 prot=2
+ProtectedChild: pub=4 prot=5
+priv via using: 6
+PrivateChild: pub=7 prot=8

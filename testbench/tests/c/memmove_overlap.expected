@@ -1,0 +1,6 @@
+forward: ababcdefij
+backward: defghfghij
+memset: AAAAAAAAAA
+cmp eq: 1
+cmp lt: 1
+memcpy: 10 20 30 40

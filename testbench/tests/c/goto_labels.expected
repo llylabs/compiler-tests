@@ -1,0 +1,4 @@
+counting: 0 1 2 3 4
+x = 10
+found 5 at (1,1)
+state machine: 4

@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: Cfg Headers
+HEADER: X-Lly-Test: from-config
+HEADER: Cache-Control: max-age=60

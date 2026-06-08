@@ -1,0 +1,6 @@
+STATUS: 200
+CONTAINS: <h1>Object Methods</h1>
+CONTAINS: Keys: a,b,c
+CONTAINS: Values: 1,2,3
+CONTAINS: Entries count: 3
+CONTAINS: Has 'a': yes

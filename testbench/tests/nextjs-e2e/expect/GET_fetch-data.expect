@@ -1,0 +1,4 @@
+STATUS: 200
+CONTAINS: <h1>Fetch Data</h1>
+CONTAINS: Users: 42
+CONTAINS: Items: 99
