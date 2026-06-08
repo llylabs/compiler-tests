@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Lily Labs — Compiler Test Trends</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text-muted: #8b949e;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+  --accent: #58a6ff;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+.subtitle {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+.subtitle a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.subtitle a:hover { text-decoration: underline; }
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.summary-card .suite-name {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.summary-card .rate {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+.summary-card .delta {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+.rate.green { color: var(--green); }
+.rate.yellow { color: var(--yellow); }
+.rate.red { color: var(--red); }
+.delta.up { color: var(--green); }
+.delta.down { color: var(--red); }
+.delta.flat { color: var(--text-muted); }
+
+.chart-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.chart-section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+.chart-container {
+  position: relative;
+  height: 400px;
+}
+
+.footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 2rem 0;
+}
+.footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Compiler Test Trends</h1>
+  <p class="subtitle">
+    Pass-rate history for every test suite we run against the
+    published Lily Labs compiler.
+    <a href="https://github.com/lilylabs/compiler-tests">source</a> ·
+    <a href="https://github.com/lilylabs/compiler-tests/blob/main/docs/methodology.md">methodology</a>
+  </p>
+
+  <div class="summary-grid" id="summaryGrid">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="chart-section">
+    <h2>Pass rate over time</h2>
+    <div class="chart-container">
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+
+  <p class="footer">
+    Last updated: <span id="lastUpdated">…</span><br>
+    Data committed to
+    <a href="https://github.com/lilylabs/compiler-tests/tree/main/results">results/</a>
+    after every nightly run.
+  </p>
+</div>
+
+<script>
+// ───── data loading ─────────────────────────────────────────
+async function loadResults() {
+  // List committed result files via GitHub API
+  const repo = "lilylabs/compiler-tests";
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/results`;
+
+  let resp;
+  try {
+    resp = await fetch(apiUrl);
+    if (!resp.ok) throw new Error("GitHub API rate-limit or repo not found");
+  } catch (e) {
+    document.body.insertAdjacentHTML(
+      "afterbegin",
+      `<div style="background:#fce8e6;color:#a50e0e;padding:1rem;text-align:center">
+        Couldn't load trend data: ${e.message}.
+        See <a href="https://github.com/${repo}/tree/main/results">results/</a> directly.
+      </div>`
+    );
+    return [];
+  }
+  const files = (await resp.json()).filter(f => f.name.match(/^\d{4}-\d{2}-\d{2}\.json$/));
+  files.sort((a, b) => a.name.localeCompare(b.name));
+
+  const runs = [];
+  for (const f of files) {
+    try {
+      const r = await fetch(f.download_url);
+      const data = await r.json();
+      runs.push({ date: f.name.replace(".json", ""), ...data });
+    } catch (e) { /* ignore broken files */ }
+  }
+  return runs;
+}
+
+// ───── rendering ────────────────────────────────────────────
+function rateClass(pct) {
+  if (pct >= 95) return "green";
+  if (pct >= 80) return "yellow";
+  return "red";
+}
+
+function deltaClass(delta) {
+  if (delta > 0.05) return "up";
+  if (delta < -0.05) return "down";
+  return "flat";
+}
+
+function deltaText(delta) {
+  if (Math.abs(delta) < 0.01) return "no change";
+  return (delta > 0 ? "+" : "") + delta.toFixed(2) + " pp";
+}
+
+function buildSummary(runs) {
+  const grid = document.getElementById("summaryGrid");
+  if (runs.length === 0) {
+    grid.innerHTML = "<p style='color:var(--text-muted)'>No runs yet — first nightly will appear here.</p>";
+    return;
+  }
+  const latest = runs[runs.length - 1];
+  const prev = runs.length > 1 ? runs[runs.length - 2] : null;
+
+  for (const suite of latest.suites) {
+    const pct = suite.total > 0 ? (suite.passed / suite.total) * 100 : 0;
+    let delta = 0;
+    if (prev) {
+      const prevSuite = prev.suites.find(s => s.id === suite.id);
+      if (prevSuite && prevSuite.total > 0) {
+        const prevPct = (prevSuite.passed / prevSuite.total) * 100;
+        delta = pct - prevPct;
+      }
+    }
+    const card = document.createElement("div");
+    card.className = "summary-card";
+    card.innerHTML = `
+      <div class="suite-name">${suite.id}</div>
+      <div class="rate ${rateClass(pct)}">${pct.toFixed(1)}%</div>
+      <div class="delta ${deltaClass(delta)}">
+        ${suite.passed}/${suite.total} · ${deltaText(delta)}
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+
+  document.getElementById("lastUpdated").textContent = latest.date;
+}
+
+function buildChart(runs) {
+  if (runs.length === 0) return;
+
+  // collect all suite ids
+  const suiteIds = new Set();
+  for (const r of runs) for (const s of r.suites) suiteIds.add(s.id);
+
+  const palette = [
+    "#3fb950", "#58a6ff", "#d29922", "#f85149",
+    "#a371f7", "#56d4dd", "#ff7b72", "#e3b341"
+  ];
+  const datasets = [...suiteIds].map((id, i) => ({
+    label: id,
+    data: runs.map(r => {
+      const s = r.suites.find(x => x.id === id);
+      return s && s.total > 0 ? (s.passed / s.total) * 100 : null;
+    }),
+    borderColor: palette[i % palette.length],
+    backgroundColor: palette[i % palette.length] + "20",
+    tension: 0.2,
+    spanGaps: true,
+  }));
+
+  new Chart(document.getElementById("trendChart"), {
+    type: "line",
+    data: { labels: runs.map(r => r.date), datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          min: 0, max: 100,
+          ticks: { color: "#8b949e", callback: v => v + "%" },
+          grid: { color: "#30363d" },
+        },
+        x: {
+          ticks: { color: "#8b949e" },
+          grid: { color: "#30363d" },
+        },
+      },
+      plugins: {
+        legend: { labels: { color: "#c9d1d9" } },
+        tooltip: {
+          backgroundColor: "#161b22",
+          borderColor: "#30363d",
+          borderWidth: 1,
+          callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(2)}%` },
+        },
+      },
+    },
+  });
+}
+
+// ───── bootstrap ────────────────────────────────────────────
+loadResults().then(runs => {
+  buildSummary(runs);
+  buildChart(runs);
+});
+</script>
+</body>
+</html>

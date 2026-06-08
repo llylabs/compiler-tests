@@ -3,25 +3,40 @@ name: Test Compiler
 on:
   workflow_dispatch:
     inputs:
-      suites:
-        description: "Comma-separated suite IDs (or 'all')"
+      tier:
+        description: "Preset tier (smoke / nightly / weekly)"
         required: false
-        default: "c-brick,cpp-brick,brick-format,realworld-build"
+        default: "smoke"
+        type: choice
+        options: [smoke, nightly, weekly, all]
+      suites:
+        description: "Override: comma-separated suite IDs (overrides tier)"
+        required: false
+        default: ""
         type: string
       plugins:
-        description: "Plugins to install via lly plugin install (space-separated)"
+        description: "Plugins to download from RC"
         required: false
         default: "c cpp nextjs deploy brick-format"
         type: string
       rc_url:
-        description: "RC origin (default: https://rc.lilylabs.io)"
+        description: "RC origin (override for staging RC)"
         required: false
         default: "https://rc.lilylabs.io"
         type: string
 
+  # PR-Smoke: nur die schnellen 100%-Suiten
+  pull_request:
+    branches: [main]
+    paths:
+      - 'testbench/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+  # Nightly: medium-tier Suite
   schedule:
-    # Nightly volle Suite um 02:00 UTC
-    - cron: '0 2 * * *'
+    - cron: '0 2 * * *'      # nightly um 02:00 UTC
+    - cron: '0 4 * * 0'      # weekly Sonntag 04:00 UTC
 
   push:
     branches: [main]
@@ -30,37 +45,83 @@ on:
       - 'scripts/**'
       - '.github/workflows/**'
 
-# Verhindert parallele Runs auf demselben Branch
 concurrency:
   group: test-compiler-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
-  contents: write    # results/<date>.json committen
-  issues: write      # Auto-Issues bei Regressions
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
 
 jobs:
+  # ─── Tier-Resolution: bestimme welche Suiten ─────────────
+  resolve:
+    runs-on: ubuntu-latest
+    outputs:
+      suites: ${{ steps.r.outputs.suites }}
+      tier: ${{ steps.r.outputs.tier }}
+    steps:
+      - id: r
+        run: |
+          # Suite-Definitionen pro Tier
+          SMOKE="c-brick,cpp-brick,brick-format"
+          NIGHTLY="c-brick,cpp-brick,brick-format,realworld-build,c-testsuite,gcc-torture,gcc-dg-cpp"
+          WEEKLY="$NIGHTLY,llvm-single"
+
+          # Trigger → Default-Tier
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            TIER="smoke"
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            if [ "${{ github.event.schedule }}" = "0 4 * * 0" ]; then
+              TIER="weekly"
+            else
+              TIER="nightly"
+            fi
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            TIER="smoke"
+          else
+            TIER="${{ inputs.tier }}"
+          fi
+
+          # Override via input.suites?
+          OVERRIDE="${{ inputs.suites }}"
+          if [ -n "$OVERRIDE" ]; then
+            SUITES="$OVERRIDE"
+          else
+            case "$TIER" in
+              smoke)   SUITES="$SMOKE" ;;
+              nightly) SUITES="$NIGHTLY" ;;
+              weekly)  SUITES="$WEEKLY" ;;
+              all)     SUITES="$WEEKLY" ;;
+              *)       SUITES="$SMOKE" ;;
+            esac
+          fi
+
+          echo "tier=$TIER" >> "$GITHUB_OUTPUT"
+          echo "suites=$SUITES" >> "$GITHUB_OUTPUT"
+          echo "::notice::Running tier=$TIER suites=$SUITES"
+
+  # ─── Main Test Job ────────────────────────────────────────
   test:
-    name: Test latest compiler from RC
+    name: Test compiler (${{ needs.resolve.outputs.tier }})
+    needs: resolve
     runs-on: ubuntu-latest
     timeout-minutes: 240
 
     steps:
-      # ─── Checkout dieses Repos ──────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # für commit-back history
 
-      # ─── System-Dependencies ────────────────────────────────
       - name: Install system dependencies
         run: |
-          sudo apt-get update
+          sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
-            jq \
-            zstd \
-            curl \
-            ca-certificates
+            jq zstd curl ca-certificates
 
-      # ─── Node-Toolchain ─────────────────────────────────────
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -68,7 +129,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: testbench/package.json
 
-      # ─── lly + Plugins von RC pullen ────────────────────────
       - name: Install lly + plugins from RC
         id: install
         run: |
@@ -82,7 +142,6 @@ jobs:
       - name: Add bin to PATH
         run: echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
 
-      # ─── External Test-Korpora-Cache ────────────────────────
       - name: Restore corpora cache
         uses: actions/cache@v4
         with:
@@ -91,20 +150,17 @@ jobs:
           restore-keys: |
             corpora-v1-
 
-      # ─── npm install ────────────────────────────────────────
       - name: Install testbench dependencies
         working-directory: testbench
         run: npm install
 
-      # ─── Run Suites ─────────────────────────────────────────
       - name: Run test suites
         id: tests
         run: |
           chmod +x scripts/run-suites.sh
-          scripts/run-suites.sh "${{ inputs.suites || 'c-brick,cpp-brick,brick-format,realworld-build' }}"
+          scripts/run-suites.sh "${{ needs.resolve.outputs.suites }}"
         continue-on-error: true
 
-      # ─── Report als Artefakt ────────────────────────────────
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
@@ -116,25 +172,57 @@ jobs:
             bin/version.json
           retention-days: 90
 
-      # ─── Result-JSON ins Repo committen ─────────────────────
       - name: Commit result summary
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: github.event_name != 'pull_request'
         run: |
           DATE=$(date -u +%Y-%m-%d)
           RESULT_FILE="results/$DATE.json"
           if [ -f results/run-summary.json ]; then
-            # combine version + summary into the date-stamped file
             jq -s '.[0] + .[1]' bin/version.json results/run-summary.json > "$RESULT_FILE"
             git config user.name  "compiler-test-bot"
             git config user.email "bot@lilylabs.dev"
             git add "$RESULT_FILE"
-            git commit -m "test run $DATE (lly $(jq -r '.lly_version' bin/version.json))" || echo "no changes"
-            git push || echo "push failed (likely no commits)"
+            git commit -m "test run $DATE (tier=${{ needs.resolve.outputs.tier }}, lly=$(jq -r '.lly_version' bin/version.json))" || echo "no changes"
+            git push || echo "push failed (no commits)"
           fi
 
-      # ─── Final: bei Test-Fail Workflow als Fail markieren ──
-      - name: Fail if tests failed
+      - name: Update README badges
+        if: github.event_name != 'pull_request'
+        run: |
+          if [ -f scripts/update-badges.sh ]; then
+            chmod +x scripts/update-badges.sh
+            scripts/update-badges.sh
+            git add README.md
+            git diff --cached --quiet || {
+              git commit -m "update badges $(date -u +%Y-%m-%d)" || true
+              git push || true
+            }
+          fi
+
+      - name: Fail if any suite failed
         if: steps.tests.outcome == 'failure'
         run: |
-          echo "::error::One or more test suites failed"
+          echo "::error::One or more test suites failed — see logs"
           exit 1
+
+  # ─── Pages-Deploy für Trend-Page ──────────────────────────
+  deploy-pages:
+    name: Deploy trend page
+    needs: test
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.tier != 'smoke')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deploy
+        uses: actions/deploy-pages@v4
