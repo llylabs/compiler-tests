@@ -1,11 +1,14 @@
 {
   "lly_version": "lly 0.2.0",
   "rc_url": "https://rc.lilylabs.io",
+  "target": "x86_64-linux",
   "plugins_requested": "c cpp nextjs deploy brick-format",
   "plugins_installed": "",
-  "installed_at": "2026-06-08T20:59:38Z",
-  "install_dir": "/home/runner/work/compiler-tests/compiler-tests/bin",
-  "plugin_dir": "/home/runner/.lly/plugins",
+  "auth_mode": "oidc",
+  "oidc_audience": "rc.lilylabs.io",
+  "installed_at": "2026-06-08T21:12:05Z",
+  "github_workflow": "Test Compiler",
+  "github_run_id": "27167222674",
   "suites": [
     {
       "id": "c-brick",
