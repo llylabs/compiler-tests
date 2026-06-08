@@ -1,0 +1,32 @@
+{
+  "lly_version": "lly 0.2.0",
+  "rc_url": "https://rc.lilylabs.io",
+  "plugins_requested": "c cpp nextjs deploy brick-format",
+  "plugins_installed": "",
+  "installed_at": "2026-06-08T20:59:38Z",
+  "install_dir": "/home/runner/work/compiler-tests/compiler-tests/bin",
+  "plugin_dir": "/home/runner/.lly/plugins",
+  "suites": [
+    {
+      "id": "c-brick",
+      "status": "fail",
+      "duration_s": 0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "cpp-brick",
+      "status": "fail",
+      "duration_s": 1,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "brick-format",
+      "status": "fail",
+      "duration_s": 0,
+      "passed": 0,
+      "total": 0
+    }
+  ]
+}
