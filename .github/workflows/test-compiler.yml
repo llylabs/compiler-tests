@@ -6,22 +6,17 @@ on:
       suites:
         description: "Comma-separated suite IDs (or 'all')"
         required: false
-        default: "c-brick,cpp-brick,nex-stdlib,realworld-build,brick-format"
+        default: "c-brick,cpp-brick,brick-format,realworld-build"
         type: string
-      machineroom_ref:
-        description: "machineroom branch/SHA"
+      plugins:
+        description: "Plugins to install via lly plugin install (space-separated)"
         required: false
-        default: "main"
+        default: "c cpp nextjs deploy brick-format"
         type: string
-      nex_ref:
-        description: "oldies/nex branch/SHA"
+      rc_url:
+        description: "RC origin (default: https://rc.lilylabs.io)"
         required: false
-        default: "main"
-        type: string
-      farm_ref:
-        description: "farm branch/SHA (für plugins)"
-        required: false
-        default: "main"
+        default: "https://rc.lilylabs.io"
         type: string
 
   schedule:
@@ -46,143 +41,98 @@ permissions:
 
 jobs:
   test:
-    name: Test compiler against ${{ inputs.machineroom_ref || 'main' }}
+    name: Test latest compiler from RC
     runs-on: ubuntu-latest
     timeout-minutes: 240
 
     steps:
-      # ─── Checkout this repo ─────────────────────────────────
-      - name: Checkout compiler-tests
+      # ─── Checkout dieses Repos ──────────────────────────────
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: compiler-tests
 
-      # ─── Checkout machineroom (Rust Compiler-Workspace) ────
-      - name: Checkout machineroom
-        uses: actions/checkout@v4
-        with:
-          repository: lilylabs/machineroom
-          ref: ${{ inputs.machineroom_ref || 'main' }}
-          ssh-key: ${{ secrets.MACHINEROOM_DEPLOY_KEY }}
-          path: machineroom
-          fetch-depth: 1
-
-      # ─── Checkout farm/plugins ─────────────────────────────
-      - name: Checkout farm
-        uses: actions/checkout@v4
-        with:
-          repository: lilylabs/farm
-          ref: ${{ inputs.farm_ref || 'main' }}
-          ssh-key: ${{ secrets.FARM_DEPLOY_KEY }}
-          path: farm
-          fetch-depth: 1
-        continue-on-error: true
-
-      # ─── Checkout oldies/nex (Legacy JS-Compiler) ──────────
-      - name: Checkout oldies/nex
-        uses: actions/checkout@v4
-        with:
-          repository: lilylabs/oldies-nex
-          ref: ${{ inputs.nex_ref || 'main' }}
-          ssh-key: ${{ secrets.NEX_DEPLOY_KEY }}
-          path: oldies-nex
-          fetch-depth: 1
-        continue-on-error: true
-
-      # ─── System Dependencies ───────────────────────────────
+      # ─── System-Dependencies ────────────────────────────────
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            build-essential \
             jq \
             zstd \
             curl \
             ca-certificates
 
-      # ─── Rust Toolchain mit Cache ──────────────────────────
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-wasip1
-
-      - name: Rust build cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: |
-            machineroom
-            oldies-nex
-            farm/plugins
-          shared-key: compiler-tests
-
-      # ─── Node Toolchain ────────────────────────────────────
+      # ─── Node-Toolchain ─────────────────────────────────────
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: compiler-tests/testbench/package.json
+          cache-dependency-path: testbench/package.json
 
-      # ─── Build Compilers ───────────────────────────────────
-      - name: Build compilers
-        id: build
+      # ─── lly + Plugins von RC pullen ────────────────────────
+      - name: Install lly + plugins from RC
+        id: install
         run: |
-          chmod +x compiler-tests/scripts/build-compilers.sh
-          compiler-tests/scripts/build-compilers.sh
+          chmod +x scripts/install-from-rc.sh
+          scripts/install-from-rc.sh
         env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
+          LLY_RC_URL:      ${{ inputs.rc_url || 'https://rc.lilylabs.io' }}
+          LLY_INSTALL_DIR: ${{ github.workspace }}/bin
+          PLUGINS:         ${{ inputs.plugins || 'c cpp nextjs deploy brick-format' }}
 
-      # ─── Cache External Test Corpora ───────────────────────
+      - name: Add bin to PATH
+        run: echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
+
+      # ─── External Test-Korpora-Cache ────────────────────────
       - name: Restore corpora cache
         uses: actions/cache@v4
         with:
-          path: compiler-tests/testbench/.data
-          key: corpora-v1-${{ hashFiles('compiler-tests/testbench/testbench.ci.json') }}
+          path: testbench/.data
+          key: corpora-v1-${{ hashFiles('testbench/testbench.ci.json') }}
           restore-keys: |
             corpora-v1-
 
-      # ─── npm install ───────────────────────────────────────
+      # ─── npm install ────────────────────────────────────────
       - name: Install testbench dependencies
-        working-directory: compiler-tests/testbench
+        working-directory: testbench
         run: npm install
 
-      # ─── Run Suites ────────────────────────────────────────
+      # ─── Run Suites ─────────────────────────────────────────
       - name: Run test suites
         id: tests
-        working-directory: compiler-tests
         run: |
           chmod +x scripts/run-suites.sh
-          scripts/run-suites.sh "${{ inputs.suites || 'c-brick,cpp-brick,nex-stdlib,realworld-build,brick-format' }}"
+          scripts/run-suites.sh "${{ inputs.suites || 'c-brick,cpp-brick,brick-format,realworld-build' }}"
         continue-on-error: true
 
-      # ─── Upload Report as Artifact ─────────────────────────
+      # ─── Report als Artefakt ────────────────────────────────
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-report-${{ github.run_id }}
           path: |
-            compiler-tests/results/
-            compiler-tests/testbench/output/
+            results/
+            testbench/output/
+            bin/version.json
           retention-days: 90
 
-      # ─── Commit Result-JSON ins Repo ───────────────────────
+      # ─── Result-JSON ins Repo committen ─────────────────────
       - name: Commit result summary
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        working-directory: compiler-tests
         run: |
           DATE=$(date -u +%Y-%m-%d)
           RESULT_FILE="results/$DATE.json"
           if [ -f results/run-summary.json ]; then
-            cp results/run-summary.json "$RESULT_FILE"
+            # combine version + summary into the date-stamped file
+            jq -s '.[0] + .[1]' bin/version.json results/run-summary.json > "$RESULT_FILE"
             git config user.name  "compiler-test-bot"
             git config user.email "bot@lilylabs.dev"
             git add "$RESULT_FILE"
-            git commit -m "test run $DATE (machineroom@${{ inputs.machineroom_ref || 'main' }})" || echo "no changes"
+            git commit -m "test run $DATE (lly $(jq -r '.lly_version' bin/version.json))" || echo "no changes"
             git push || echo "push failed (likely no commits)"
           fi
 
-      # ─── Final Step: Tests müssen grün gewesen sein ────────
+      # ─── Final: bei Test-Fail Workflow als Fail markieren ──
       - name: Fail if tests failed
         if: steps.tests.outcome == 'failure'
         run: |

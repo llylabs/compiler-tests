@@ -19,21 +19,19 @@ SUITES_ARG="${1:-c-brick,cpp-brick,nex-stdlib,realworld-build}"
 BIN_DIR="$REPO_ROOT/bin"
 TB_DIR="$REPO_ROOT/testbench"
 
-# Export the binaries the testbench expects
-export LLY_BIN="$BIN_DIR/lly"
+# Export lly so testbench finds it
+export LLY_BIN="$(command -v lly || echo "$BIN_DIR/lly")"
 export PATH="$BIN_DIR:$PATH"
 
-if [ ! -x "$BIN_DIR/lly" ]; then
-  echo "✗ $BIN_DIR/lly not found or not executable"
-  echo "  Run scripts/build-compilers.sh first."
+if ! command -v lly >/dev/null 2>&1; then
+  echo "✗ lly not on PATH"
+  echo "  Run scripts/install-from-rc.sh first."
   exit 1
 fi
 
-# Ensure nex is on PATH (fall back to bundled binary in bin/)
-if [ -x "$BIN_DIR/nex" ]; then
-  # testbench.ci.json points 'nex' to this absolute path
-  :
-fi
+echo "  Using lly: $(command -v lly)"
+echo "  Version:   $(lly --version 2>&1 | head -1)"
+echo ""
 
 # Resolve suite list
 if [ "$SUITES_ARG" = "all" ]; then

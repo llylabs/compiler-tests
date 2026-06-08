@@ -1,10 +1,10 @@
 {
-  "_comment": "CI-specific testbench config. Paths assume binaries built into ../bin/ by scripts/build-compilers.sh and tests/ next to this file.",
-  "plugins_dir": "../bin/farm-plugins",
+  "_comment": "CI config — uses lly + plugins installed from RC. Plugins land in ~/.lly/plugins/ and lly knows how to find them itself, so plugins_dir is empty (kept for compat with config schema).",
+  "plugins_dir": "",
   "tests_dir": "./tests",
-  "include_path": "../../machineroom/compiler/static/include",
-  "nex": "../bin/nex",
-  "lly": "../bin/lly",
+  "include_path": "",
+  "nex": "lly",
+  "lly": "lly",
   "data_dir": ".data",
   "suites": [
     {
@@ -21,12 +21,6 @@
       "id": "brick-format",
       "runner": "brick-format",
       "label": "Brick Format Validation"
-    },
-    {
-      "id": "nex-stdlib",
-      "runner": "nex-stdlib",
-      "label": "Nex Stdlib",
-      "nex": "../bin/nex"
     },
     {
       "id": "realworld-build",
@@ -70,15 +64,13 @@
       }
     },
     {
-      "id": "test262",
-      "runner": "test262",
-      "label": "TC39 test262 (JS)",
-      "nex": "../bin/nex",
+      "id": "llvm-single",
+      "runner": "llvm-single",
+      "label": "LLVM single-source tests",
       "config": {
-        "repo": "https://github.com/tc39/test262",
-        "data_dir": ".data/test262",
-        "concurrency": 8,
-        "timeout_ms": 30000
+        "repo": "https://github.com/llvm/llvm-test-suite",
+        "data_dir": ".data/llvm",
+        "concurrency": 8
       }
     }
   ]
