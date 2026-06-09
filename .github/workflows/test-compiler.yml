@@ -3,40 +3,14 @@ name: Test Compiler
 on:
   workflow_dispatch:
     inputs:
-      tier:
-        description: "Preset tier (smoke / nightly / weekly)"
-        required: false
-        default: "smoke"
-        type: choice
-        options: [smoke, nightly, weekly, all]
-      suites:
-        description: "Override: comma-separated suite IDs (overrides tier)"
-        required: false
-        default: ""
-        type: string
-      plugins:
-        description: "Plugins to download from RC"
-        required: false
-        default: "c cpp nextjs deploy brick-format"
-        type: string
       rc_url:
         description: "RC origin (override for staging RC)"
         required: false
         default: "https://rc.lilylabs.io"
         type: string
 
-  # PR-Smoke: nur die schnellen 100%-Suiten
-  pull_request:
-    branches: [main]
-    paths:
-      - 'testbench/**'
-      - 'scripts/**'
-      - '.github/workflows/**'
-
-  # Nightly: medium-tier Suite
   schedule:
-    - cron: '0 2 * * *'      # nightly um 02:00 UTC
-    - cron: '0 4 * * 0'      # weekly Sonntag 04:00 UTC
+    - cron: '0 2 * * *'   # nightly um 02:00 UTC
 
   push:
     branches: [main]
@@ -55,66 +29,22 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  # Vollständige C+C++ Benchmark-Suite — jeder Trigger fährt alles
+  ALL_SUITES: "c-brick,cpp-brick,brick-format,realworld-build,c-testsuite,gcc-torture,gcc-dg-cpp,llvm-single"
+  ALL_PLUGINS: "c cpp brick-format"
+
 jobs:
-  # ─── Tier-Resolution: bestimme welche Suiten ─────────────
-  resolve:
-    runs-on: ubuntu-latest
-    outputs:
-      suites: ${{ steps.r.outputs.suites }}
-      tier: ${{ steps.r.outputs.tier }}
-    steps:
-      - id: r
-        run: |
-          # Suite-Definitionen pro Tier
-          SMOKE="c-brick,cpp-brick,brick-format"
-          NIGHTLY="c-brick,cpp-brick,brick-format,realworld-build,c-testsuite,gcc-torture,gcc-dg-cpp"
-          WEEKLY="$NIGHTLY,llvm-single"
-
-          # Trigger → Default-Tier
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            TIER="smoke"
-          elif [ "${{ github.event_name }}" = "schedule" ]; then
-            if [ "${{ github.event.schedule }}" = "0 4 * * 0" ]; then
-              TIER="weekly"
-            else
-              TIER="nightly"
-            fi
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            TIER="smoke"
-          else
-            TIER="${{ inputs.tier }}"
-          fi
-
-          # Override via input.suites?
-          OVERRIDE="${{ inputs.suites }}"
-          if [ -n "$OVERRIDE" ]; then
-            SUITES="$OVERRIDE"
-          else
-            case "$TIER" in
-              smoke)   SUITES="$SMOKE" ;;
-              nightly) SUITES="$NIGHTLY" ;;
-              weekly)  SUITES="$WEEKLY" ;;
-              all)     SUITES="$WEEKLY" ;;
-              *)       SUITES="$SMOKE" ;;
-            esac
-          fi
-
-          echo "tier=$TIER" >> "$GITHUB_OUTPUT"
-          echo "suites=$SUITES" >> "$GITHUB_OUTPUT"
-          echo "::notice::Running tier=$TIER suites=$SUITES"
-
-  # ─── Main Test Job ────────────────────────────────────────
   test:
-    name: Test compiler (${{ needs.resolve.outputs.tier }})
-    needs: resolve
+    name: Full C/C++ benchmark against latest RC
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 360
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # für commit-back history
+          fetch-depth: 0
 
       - name: Install system dependencies
         run: |
@@ -137,10 +67,8 @@ jobs:
         env:
           LLY_RC_URL:      ${{ inputs.rc_url || 'https://rc.lilylabs.io' }}
           LLY_INSTALL_DIR: ${{ github.workspace }}/bin
-          PLUGINS:         ${{ inputs.plugins || 'c cpp nextjs deploy brick-format' }}
+          PLUGINS:         ${{ env.ALL_PLUGINS }}
           OIDC_AUDIENCE:   "rc.lilylabs.io"
-          # ACTIONS_ID_TOKEN_REQUEST_TOKEN and ACTIONS_ID_TOKEN_REQUEST_URL
-          # are auto-injected because permissions.id-token: write is set.
 
       - name: Add bin to PATH
         run: echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
@@ -157,11 +85,11 @@ jobs:
         working-directory: testbench
         run: npm install
 
-      - name: Run test suites
+      - name: Run full C/C++ benchmark suite
         id: tests
         run: |
           chmod +x scripts/run-suites.sh
-          scripts/run-suites.sh "${{ needs.resolve.outputs.suites }}"
+          scripts/run-suites.sh "${{ env.ALL_SUITES }}"
         continue-on-error: true
 
       - name: Upload test report
@@ -176,7 +104,6 @@ jobs:
           retention-days: 90
 
       - name: Commit result summary
-        if: github.event_name != 'pull_request'
         run: |
           DATE=$(date -u +%Y-%m-%d)
           RESULT_FILE="results/$DATE.json"
@@ -185,12 +112,11 @@ jobs:
             git config user.name  "compiler-test-bot"
             git config user.email "bot@lilylabs.dev"
             git add "$RESULT_FILE"
-            git commit -m "test run $DATE (tier=${{ needs.resolve.outputs.tier }}, lly=$(jq -r '.lly_version' bin/version.json))" || echo "no changes"
+            git commit -m "C/C++ benchmark run $DATE (lly=$(jq -r '.lly_version' bin/version.json))" || echo "no changes"
             git push || echo "push failed (no commits)"
           fi
 
       - name: Update README badges
-        if: github.event_name != 'pull_request'
         run: |
           if [ -f scripts/update-badges.sh ]; then
             chmod +x scripts/update-badges.sh
@@ -208,11 +134,9 @@ jobs:
           echo "::error::One or more test suites failed — see logs"
           exit 1
 
-  # ─── Pages-Deploy für Trend-Page ──────────────────────────
   deploy-pages:
     name: Deploy trend page
     needs: test
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.tier != 'smoke')
     runs-on: ubuntu-latest
     permissions:
       contents: read

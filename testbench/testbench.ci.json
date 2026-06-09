@@ -1,5 +1,5 @@
 {
-  "_comment": "CI config — uses lly + plugins installed from RC. Plugins land in ~/.lly/plugins/ and lly knows how to find them itself, so plugins_dir is empty (kept for compat with config schema).",
+  "_comment": "CI config — full C+C++ benchmark suite against latest lly from RC. Every trigger runs all 8 suites end-to-end. JS/Next.js/etc. suites are intentionally excluded; see README.",
   "plugins_dir": "",
   "tests_dir": "./tests",
   "include_path": "",
@@ -25,7 +25,7 @@
     {
       "id": "realworld-build",
       "runner": "realworld-build",
-      "label": "Real-World C/C++ Programs (build + smoke + caps)",
+      "label": "Real-World C/C++ Programs",
       "config": {
         "timeout_ms": 600000,
         "offline_only": false

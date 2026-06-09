@@ -51,9 +51,11 @@ for the history.
 
 ## How runs work
 
-1. **Schedule**: nightly at 02:00 UTC. Plus on-push for
-   `testbench/` or `scripts/` changes, plus manual via
-   `workflow_dispatch`.
+1. **Schedule**: every trigger runs the **full C/C++
+   suite** end-to-end — no tiers, no smoke shortcuts.
+   Triggers: `workflow_dispatch`, `schedule` (nightly at
+   02:00 UTC), and `push` to `main` for `testbench/`/
+   `scripts/`/workflow changes.
 2. **Compiler version**: fetched from RC at start of run.
    The exact `lly --version` output is recorded in
    `bin/version.json` and merged into the result file.
@@ -108,7 +110,6 @@ compiler-correctness suites are what's tested here.
 | **Compile-only** (gcc-dg-cpp diagnostics) | source compiles without unexpected diagnostics |
 | **Compile + run** (most C/C++ suites) | source compiles, output binary runs, exit code 0 |
 | **Compile + run + match** (c-testsuite) | exit code 0 *and* stdout matches expected file byte-for-byte |
-| **Conformance** (test262, when added) | TC39 negative tests fail correctly, positive tests run without exception |
 
 Each suite's `docs/suites/<name>.md` explains its
 specific definition.
@@ -125,8 +126,6 @@ Several reasons, all documented per suite:
 - **LLVM single-source**: large fraction relies on
   POSIX features (mmap, signals, threading) where our
   WASI implementation is still partial.
-- **test262**: 15+ pp gap to Node.js is real — we're
-  catching up suite-by-suite. The trend is upward.
 
 We could artificially boost these numbers by adding
 custom skip lists. We deliberately don't, because the
