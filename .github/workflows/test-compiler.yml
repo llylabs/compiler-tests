@@ -32,7 +32,10 @@ permissions:
 env:
   # Vollständige C+C++ Benchmark-Suite — jeder Trigger fährt alles
   ALL_SUITES: "c-brick,cpp-brick,brick-format,realworld-build,c-testsuite,gcc-torture,gcc-dg-cpp,llvm-single"
-  ALL_PLUGINS: "c cpp brick-format"
+  # Only plugins that exist as stable versions in the RC catalog.
+  # brick-format / nextjs / deploy aren't published yet — adding them
+  # would just produce 404s, so we install only what we can actually use.
+  ALL_PLUGINS: "c cpp"
 
 jobs:
   test:
