@@ -1,0 +1,63 @@
+{
+  "lly_version": "lly 0.2.0",
+  "rc_url": "https://rc.lilylabs.io",
+  "target": "x86_64-linux",
+  "plugins_requested": "c cpp nextjs deploy brick-format",
+  "plugins_installed": "",
+  "auth_mode": "oidc",
+  "oidc_audience": "rc.lilylabs.io",
+  "installed_at": "2026-06-09T03:12:38Z",
+  "github_workflow": "Test Compiler",
+  "github_run_id": "27181431783",
+  "suites": [
+    {
+      "id": "c-brick",
+      "status": "fail",
+      "duration_s": 1,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "cpp-brick",
+      "status": "fail",
+      "duration_s": 0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "brick-format",
+      "status": "fail",
+      "duration_s": 0,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "realworld-build",
+      "status": "fail",
+      "duration_s": 6,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "c-testsuite",
+      "status": "fail",
+      "duration_s": 1,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "gcc-torture",
+      "status": "fail",
+      "duration_s": 14,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "gcc-dg-cpp",
+      "status": "fail",
+      "duration_s": 6,
+      "passed": 0,
+      "total": 0
+    }
+  ]
+}
