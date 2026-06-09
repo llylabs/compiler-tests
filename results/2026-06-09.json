@@ -2,13 +2,13 @@
   "lly_version": "lly 0.2.0",
   "rc_url": "https://rc.lilylabs.io",
   "target": "x86_64-linux",
-  "plugins_requested": "c cpp nextjs deploy brick-format",
+  "plugins_requested": "c cpp brick-format",
   "plugins_installed": "",
   "auth_mode": "oidc",
   "oidc_audience": "rc.lilylabs.io",
-  "installed_at": "2026-06-09T03:12:38Z",
+  "installed_at": "2026-06-09T14:45:41Z",
   "github_workflow": "Test Compiler",
-  "github_run_id": "27181431783",
+  "github_run_id": "27214297961",
   "suites": [
     {
       "id": "c-brick",
@@ -27,14 +27,14 @@
     {
       "id": "brick-format",
       "status": "fail",
-      "duration_s": 0,
+      "duration_s": 1,
       "passed": 0,
       "total": 0
     },
     {
       "id": "realworld-build",
       "status": "fail",
-      "duration_s": 6,
+      "duration_s": 7,
       "passed": 0,
       "total": 0
     },
@@ -48,14 +48,21 @@
     {
       "id": "gcc-torture",
       "status": "fail",
-      "duration_s": 14,
+      "duration_s": 15,
       "passed": 0,
       "total": 0
     },
     {
       "id": "gcc-dg-cpp",
       "status": "fail",
-      "duration_s": 6,
+      "duration_s": 8,
+      "passed": 0,
+      "total": 0
+    },
+    {
+      "id": "llvm-single",
+      "status": "fail",
+      "duration_s": 4,
       "passed": 0,
       "total": 0
     }
